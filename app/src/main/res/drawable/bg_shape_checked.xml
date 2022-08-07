@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--rectangle：设置一个矩形-->
+
+    <solid android:color="@color/drawable1"/>
+    <!--设置边框-->
+    <stroke android:color="@color/drawable1" android:width="2dp"/>
+    <!--设置圆角效果-->
+    <corners android:topLeftRadius="10px"
+        android:topRightRadius="10px"
+        android:bottomRightRadius="10px"
+        android:bottomLeftRadius="10px"/>
+</shape>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="citys">
+        <item>杭州</item>
+        <item>合肥</item>
+        <item>南京</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20px"
+    tools:context=".query.OrderQueryActivity">
+
+    <TextView
+        android:id="@+id/tv_city_choise"
+        style="@style/Tv_Title_Style"
+        android:text="城市" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sp_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_city_choise"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_city_choise"
+        android:background="@drawable/spinner_drop_down_shape"
+        android:spinnerMode="dialog" />
+
+    <TextView
+        android:id="@+id/tv_order_mounth"
+        style="@style/Tv_Title_Style"
+        android:layout_below="@id/tv_city_choise"
+        android:layout_alignLeft="@id/tv_city_choise"
+        android:layout_marginTop="20dp"
+        android:text="月份" />
+
+    <TextView
+        android:id="@+id/tv_order_mounth_content"
+        style="@style/Tv_Title_Style"
+        android:layout_width="wrap_content"
+        android:layout_alignTop="@id/tv_order_mounth"
+
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_order_mounth"
+        android:text="请选择月份" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_statistics"-->
+    <!--        style="@style/Tv_Title_Style"-->
+    <!--        android:layout_below="@id/tv_order_mounth"-->
+    <!--        android:layout_alignLeft="@id/tv_order_mounth"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:text="统计" />-->
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_statistics_content"-->
+    <!--        style="@style/Tv_Title_Style"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignTop="@id/tv_statistics"-->
+    <!--        android:layout_marginLeft="10dp"-->
+    <!--        android:layout_toRightOf="@id/tv_statistics"-->
+    <!--        android:text=" " />-->
+
+
+    <Button
+        android:id="@+id/btn_statistics"
+        style="@style/BtnStyle"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:text="统计" />
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rcv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_statistics"
+        android:layout_below="@id/tv_order_mounth"
+        android:layout_marginTop="30dp" />
+</RelativeLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="1600dp"
+    android:layout_height="wrap_content"
+    android:background="@color/record_itme_bg"
+    android:orientation="vertical"
+    android:id="@+id/item_root"
+    android:padding="5dp">
+
+    <TextView android:id="@+id/time"
+        style="@style/Tv_Order_Item"
+        />
+
+    <TextView android:id="@+id/hospital"
+        style="@style/Tv_Order_Item"
+        />
+
+    <TextView android:id="@+id/device"
+        style="@style/Tv_Order_Item"
+        />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2px"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_below="@id/device"-->
+<!--        android:background="@color/drawable1" />-->
+</LinearLayout>

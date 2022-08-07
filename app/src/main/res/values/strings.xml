@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">小王记录</string>
+    <string name="add_info">录入信息</string>
+    <string name="add_record">添加记录</string>
+    <string name="query_record">查询记录</string>
+
+
+    <string name="add_city">添加城市</string>
+    <string name="add_hospital">添加医院</string>
+    <string name="add_department">添加科室</string>
+    <string name="add_technician">添加技师</string>
+    <string name="add_installer">添加装机师</string>
+    <string name="add_devices">添加设备</string>
+
+    <string name="add">增加</string>
+    <string name="share">分享</string>
+</resources>

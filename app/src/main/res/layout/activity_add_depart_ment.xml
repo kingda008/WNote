@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20px"
+    tools:context=".addinfo.AddDepartMentActivity">
+
+    <TextView
+        android:id="@+id/tv_city_choise"
+        style="@style/Tv_Title_Style"
+        android:layout_alignParentRight="true"
+        android:text="城市" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sp_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_city_choise"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/tv_city_choise"
+        android:background="@drawable/spinner_drop_down_shape"
+        android:spinnerMode="dialog" />
+
+
+
+    <TextView
+        android:id="@+id/tv_hospital_choise"
+        style="@style/Tv_Title_Style"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_city_choise"
+        android:layout_marginTop="20dp"
+        android:text="医院" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sp_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_hospital_choise"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/tv_hospital_choise"
+        android:background="@drawable/spinner_drop_down_shape"
+        android:spinnerMode="dialog" />
+
+
+
+    <Button
+        android:id="@+id/btn_add"
+        style="@style/BtnStyle"
+        android:layout_below="@id/tv_hospital_choise"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_btn"
+        android:text="@string/add" />
+
+    <EditText
+        android:id="@+id/edt_city_department"
+        style="@style/EditStyle"
+        android:layout_alignTop="@id/btn_add"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/btn_add"
+        android:background="@drawable/bg_shape_unchecked"
+        android:hint="请输入科室名" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rcv_departmeng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_city_department"
+        android:layout_marginTop="30dp" />
+
+
+</RelativeLayout>
