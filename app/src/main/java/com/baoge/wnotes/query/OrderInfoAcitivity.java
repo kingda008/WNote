@@ -1,7 +1,6 @@
 package com.baoge.wnotes.query;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,11 +28,7 @@ public class OrderInfoAcitivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_info_acitivity);
 
-
         rootGroup = (LinearLayout) findViewById(R.id.lay_root);
-
-
-
     }
 
     @Override
@@ -103,6 +98,16 @@ public class OrderInfoAcitivity extends BaseActivity {
             rootGroup.addView(view);
 
             view = new StaisticTv(OrderInfoAcitivity.this);
+            view.setContent("是否已经支持", order.getIsAleadySupport() ? "是" : "否");
+            rootGroup.addView(view);
+
+
+            view = new StaisticTv(OrderInfoAcitivity.this);
+            view.setContent("发票", order.getInvoice() + "");
+            rootGroup.addView(view);
+
+
+            view = new StaisticTv(OrderInfoAcitivity.this);
             String otherContent = order.getOtherContent();
             otherContent = TextUtils.isEmpty(otherContent) ? "无" : otherContent;
             view.setContent("其他描述", otherContent);
@@ -119,11 +124,11 @@ public class OrderInfoAcitivity extends BaseActivity {
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     Intent intent = new Intent(OrderInfoAcitivity.this, AddOrderActivity.class);
-                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                     intent.putExtra("order",orderJson);
-                     startActivity(intent);
-                     finish();
+                    Intent intent = new Intent(OrderInfoAcitivity.this, AddOrderActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("order", orderJson);
+                    startActivity(intent);
+                    finish();
                 }
             });
         }

@@ -138,9 +138,27 @@
 
 
     <TextView
-        android:id="@+id/tv_price"
+        android:id="@+id/tv_name"
         style="@style/Tv_Title_Style"
         android:layout_below="@id/tv_order_time"
+        android:layout_alignLeft="@id/tv_order_time"
+        android:layout_marginTop="10dp"
+        android:text="姓名" />
+
+    <EditText
+        android:id="@+id/edt_name"
+        style="@style/EditStyle"
+        android:layout_alignTop="@id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:background="@drawable/bg_shape_unchecked"
+        android:hint="请输入姓名"  />
+
+
+    <TextView
+        android:id="@+id/tv_price"
+        style="@style/Tv_Title_Style"
+        android:layout_below="@id/tv_name"
         android:layout_alignLeft="@id/tv_order_time"
         android:layout_marginTop="10dp"
         android:text="金额" />
@@ -194,9 +212,29 @@
 
 
     <TextView
-        android:id="@+id/tv_support"
+        android:id="@+id/tv_invoice"
         style="@style/Tv_Title_Style"
         android:layout_below="@id/tv_part_price"
+        android:layout_alignLeft="@id/tv_part_price"
+        android:layout_marginTop="10dp"
+        android:text="发票" />
+
+    <EditText
+        android:id="@+id/edt_invoice"
+        style="@style/EditStyle"
+        android:layout_alignTop="@id/tv_invoice"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_invoice"
+        android:background="@drawable/bg_shape_unchecked"
+        android:hint="请输入支持金额"
+        android:inputType="numberDecimal" />
+
+
+
+    <TextView
+        android:id="@+id/tv_support"
+        style="@style/Tv_Title_Style"
+        android:layout_below="@id/tv_invoice"
         android:layout_alignLeft="@id/tv_part_price"
         android:layout_marginTop="10dp"
         android:text="支持" />
@@ -211,14 +249,34 @@
         android:hint="请输入支持金额"
         android:inputType="numberDecimal" />
 
+
+    <TextView
+        android:id="@+id/tv_is_support"
+        style="@style/Tv_Title_Style"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tv_support"
+        android:layout_alignLeft="@id/tv_part_price"
+        android:layout_marginTop="10dp"
+        android:text="是否支持" />
+
+    <CheckBox
+        android:id="@+id/cb_is_support"
+        style="@style/EditStyle"
+        android:layout_alignTop="@id/tv_is_support"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_is_support"  />
+
+
     <TextView
         android:id="@+id/tv_other_tip"
         style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_support"
+        android:layout_below="@id/tv_is_support"
         android:layout_alignLeft="@id/tv_support"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:text="其他描述" />
+
+
 
     <EditText
         android:id="@+id/edt_other_tip"

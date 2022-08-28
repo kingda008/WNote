@@ -94,7 +94,7 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 int otherMoney = 0;
                 int deviceMoney = 0;
                 int supportMoney = 0;
-
+                int invoceMoney = 0;
                 HashMap<String, Integer> technicianMoneyMap = new HashMap<>();
                 HashMap<String, Integer> departMentMoneyMap = new HashMap<>();
 
@@ -108,6 +108,8 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                     int deviceMoneyDB = DbManager.getInstance().queryDevicePrice(order.getDevice());
                     deviceMoney = deviceMoney + deviceMoneyDB;
                     installMoney = installMoney + order.getInstallPrice();
+                    invoceMoney = invoceMoney+order.getInvoice();
+
                     int technicianMoney = (order.getTransactionAmount() - order.getTaxiFare() - order.getPartPrice() - order.getInstallPrice() - order.getOtherPrice() - order.getSupportPrice() - deviceMoneyDB) / 3;
                     if (technicianMoneyMap.containsKey(order.getTechnician())) {
                         technicianMoneyMap.put(order.getTechnician(), technicianMoneyMap.get(order.getTechnician()) + technicianMoney);
@@ -147,13 +149,17 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 staisticTv.setContent("支持成本", supportMoney + "");
                 rootLayout.addView(staisticTv);
 
+                staisticTv = new StaisticTv(StatisticActivity.this);
+                staisticTv.setContent("发票成本", supportMoney + "");
+                rootLayout.addView(staisticTv);
+
 
                 staisticTv = new StaisticTv(StatisticActivity.this);
                 staisticTv.setContent("其他成本", otherMoney + "");
                 rootLayout.addView(staisticTv);
 
                 staisticTv = new StaisticTv(StatisticActivity.this);
-                double profit = totalMoney - deviceMoney - partDeviceMoney - installMoney - supportMoney - taxiMoney - otherMoney;
+                double profit = totalMoney - deviceMoney - partDeviceMoney - installMoney - supportMoney - taxiMoney - otherMoney-invoceMoney;
                 staisticTv.setContent("利润总数", profit + "");
                 rootLayout.addView(staisticTv);
 
@@ -179,15 +185,15 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 rootLayout.addView(dividingLine);
 
 
-                iterator = departMentMoneyMap.keySet().iterator();
-                while (iterator.hasNext()) {
-                    String name = iterator.next();
-                    double money = departMentMoneyMap.get(name);
-
-                    staisticTv = new StaisticTv(StatisticActivity.this);
-                    staisticTv.setContent(name, money + "");
-                    rootLayout.addView(staisticTv);
-                }
+//                iterator = departMentMoneyMap.keySet().iterator();
+//                while (iterator.hasNext()) {
+//                    String name = iterator.next();
+//                    double money = departMentMoneyMap.get(name);
+//
+//                    staisticTv = new StaisticTv(StatisticActivity.this);
+//                    staisticTv.setContent(name, money + "");
+//                    rootLayout.addView(staisticTv);
+//                }
 
 
             }

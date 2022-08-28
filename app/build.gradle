@@ -28,7 +28,7 @@ android {
 //    }
 
     greendao {
-        schemaVersion 16
+        schemaVersion 19
         daoPackage "com.baoge.wnotes.dao"
         targetGenDir "src/main/java"
     }

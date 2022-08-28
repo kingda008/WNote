@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,13 +55,14 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
 
     private TextView orderTime;
 
-    private EditText priceEdt, taxiPriceEdt, partPriceEdt, otherPriceEdt;
+    private EditText priceEdt, taxiPriceEdt, partPriceEdt, otherPriceEdt,invoiceEdt,nameEdt;
     private EditText supportEdt, otherTipEdt;
 
     private final String timeSelectTip = "请选择交易日期";
 
 
     private Order editOrder;
+    private CheckBox supportCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             taxiPriceEdt.setText(editOrder.getTaxiFare() + "");
             partPriceEdt.setText(editOrder.getPartPrice() + "");
             supportEdt.setText(editOrder.getSupportPrice() + "");
+            invoiceEdt.setText(editOrder.getInvoice() + "");
+            nameEdt.setText(editOrder.getName());
+            supportCB.setChecked(editOrder.getIsAleadySupport());
+
             if (!TextUtils.isEmpty(editOrder.getOtherContent())) {
                 otherTipEdt.setText(editOrder.getOtherContent());
             }
@@ -127,11 +134,25 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         supportEdt = (EditText) findViewById(R.id.edt_support);
         otherTipEdt = (EditText) findViewById(R.id.edt_other_tip);
         otherPriceEdt = (EditText) findViewById(R.id.edt_other_price);
+        invoiceEdt = (EditText)findViewById(R.id.edt_invoice);
+        nameEdt = (EditText)findViewById(R.id.edt_name);
 
+        supportCB = (CheckBox)findViewById(R.id.cb_is_support);
         ((Button) findViewById(R.id.btn_add)).setOnClickListener(this);
         orderTime.setOnClickListener(this);
 
         orderTime.setText(timeSelectTip);
+
+        supportCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    ToastUtil.show("已支持");
+                }else {
+                    ToastUtil.show("未支持");
+                }
+            }
+        });
     }
 
     private void initSpinner() {
@@ -311,6 +332,12 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        String name = nameEdt.getText().toString();
+
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.show("请先输入姓名");
+            return;
+        }
 
         if (TextUtils.isEmpty(priceEdt.getText().toString())) {
             ToastUtil.show("请先输入金额");
@@ -338,6 +365,14 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         order.setInstallPrice(DataUtil.getInstallPrice(citys.get(citySpinnerSelectPosition)));
         order.setOrderTime(DateFormat.getDate(orderTime.getText().toString(), DateFormat.FORMAT_YYYY_MM_DD));
         order.setTransactionAmount(Integer.parseInt(priceEdt.getText().toString()));
+        order.setName(nameEdt.getText().toString());
+        order.setIsAleadySupport(supportCB.isChecked());
+
+        int invoice = 0;
+        if(!TextUtils.isEmpty(invoiceEdt.getText().toString())){
+            invoice = Integer.parseInt(invoiceEdt.getText().toString());
+            order.setInvoice(invoice);
+        }
 
         String taxiPrice = taxiPriceEdt.getText().toString();
         if (!TextUtils.isEmpty(taxiPrice)) {
@@ -362,11 +397,11 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         } else if (TextUtils.isEmpty(otherTip) && TextUtils.isEmpty(otherPrice)) {
 
         } else {
-            ToastUtil.show("其他内容需要保持一致");
+            ToastUtil.show("其他内容需要保持一致，都要填");
             return;
         }
 
-        int profit = Integer.parseInt(priceEdt.getText().toString()) - DbManager.getInstance().queryDevicePrice(devices.get(deviceSpinnerSelectPosition));
+        int profit = Integer.parseInt(priceEdt.getText().toString()) - DbManager.getInstance().queryDevicePrice(devices.get(deviceSpinnerSelectPosition))-invoice;
 
         if (!TextUtils.isEmpty(taxiPriceEdt.getText().toString())) {
             profit = profit - Integer.parseInt(taxiPriceEdt.getText().toString());
@@ -419,9 +454,6 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 ToastUtil.show("添加失败");
             }
         }
-
-
-
 
     }
 

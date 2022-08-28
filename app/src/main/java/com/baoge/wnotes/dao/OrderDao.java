@@ -40,7 +40,10 @@ public class OrderDao extends AbstractDao<Order, Long> {
         public final static Property SupportPrice = new Property(13, int.class, "supportPrice", false, "SUPPORT_PRICE");
         public final static Property OtherContent = new Property(14, String.class, "otherContent", false, "OTHER_CONTENT");
         public final static Property OtherPrice = new Property(15, int.class, "otherPrice", false, "OTHER_PRICE");
-        public final static Property Type = new Property(16, int.class, "type", false, "TYPE");
+        public final static Property Invoice = new Property(16, int.class, "invoice", false, "INVOICE");
+        public final static Property Name = new Property(17, String.class, "name", false, "NAME");
+        public final static Property IsAleadySupport = new Property(18, boolean.class, "isAleadySupport", false, "IS_ALEADY_SUPPORT");
+        public final static Property Type = new Property(19, int.class, "type", false, "TYPE");
     }
 
 
@@ -72,7 +75,10 @@ public class OrderDao extends AbstractDao<Order, Long> {
                 "\"SUPPORT_PRICE\" INTEGER NOT NULL ," + // 13: supportPrice
                 "\"OTHER_CONTENT\" TEXT," + // 14: otherContent
                 "\"OTHER_PRICE\" INTEGER NOT NULL ," + // 15: otherPrice
-                "\"TYPE\" INTEGER NOT NULL );"); // 16: type
+                "\"INVOICE\" INTEGER NOT NULL ," + // 16: invoice
+                "\"NAME\" TEXT," + // 17: name
+                "\"IS_ALEADY_SUPPORT\" INTEGER NOT NULL ," + // 18: isAleadySupport
+                "\"TYPE\" INTEGER NOT NULL );"); // 19: type
     }
 
     /** Drops the underlying database table. */
@@ -132,7 +138,14 @@ public class OrderDao extends AbstractDao<Order, Long> {
             stmt.bindString(15, otherContent);
         }
         stmt.bindLong(16, entity.getOtherPrice());
-        stmt.bindLong(17, entity.getType());
+        stmt.bindLong(17, entity.getInvoice());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(18, name);
+        }
+        stmt.bindLong(19, entity.getIsAleadySupport() ? 1L: 0L);
+        stmt.bindLong(20, entity.getType());
     }
 
     @Override
@@ -186,7 +199,14 @@ public class OrderDao extends AbstractDao<Order, Long> {
             stmt.bindString(15, otherContent);
         }
         stmt.bindLong(16, entity.getOtherPrice());
-        stmt.bindLong(17, entity.getType());
+        stmt.bindLong(17, entity.getInvoice());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(18, name);
+        }
+        stmt.bindLong(19, entity.getIsAleadySupport() ? 1L: 0L);
+        stmt.bindLong(20, entity.getType());
     }
 
     @Override
@@ -213,7 +233,10 @@ public class OrderDao extends AbstractDao<Order, Long> {
             cursor.getInt(offset + 13), // supportPrice
             cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // otherContent
             cursor.getInt(offset + 15), // otherPrice
-            cursor.getInt(offset + 16) // type
+            cursor.getInt(offset + 16), // invoice
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // name
+            cursor.getShort(offset + 18) != 0, // isAleadySupport
+            cursor.getInt(offset + 19) // type
         );
         return entity;
     }
@@ -236,7 +259,10 @@ public class OrderDao extends AbstractDao<Order, Long> {
         entity.setSupportPrice(cursor.getInt(offset + 13));
         entity.setOtherContent(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
         entity.setOtherPrice(cursor.getInt(offset + 15));
-        entity.setType(cursor.getInt(offset + 16));
+        entity.setInvoice(cursor.getInt(offset + 16));
+        entity.setName(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
+        entity.setIsAleadySupport(cursor.getShort(offset + 18) != 0);
+        entity.setType(cursor.getInt(offset + 19));
      }
     
     @Override

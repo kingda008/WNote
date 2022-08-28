@@ -36,7 +36,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private MaterialDialog tipsDialog;
 
 
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -61,20 +60,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .cancelable(false)
                 .positiveText("确定")
                 .negativeText("取消")
+                .autoDismiss(false)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        LogUtil.i("输入的密码内容=" + dialog.getInputEditText().getText().toString());
+
 
                         if ("wdc0601".equals(dialog.getInputEditText().getText().toString())) {
                             ToastUtil.show("小王真好看");
                             tipsDialog.dismiss();
-
                         } else {
                             ToastUtil.show("密码错误");
-                            MainActivity.this.finish();
-                        }
 
+                        }
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -97,7 +95,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ((TextView) findViewById(R.id.add_info)).setOnClickListener(this);
         ((TextView) findViewById(R.id.add_record)).setOnClickListener(this);
         ((TextView) findViewById(R.id.query_record)).setOnClickListener(this);
-
 
 
     }
