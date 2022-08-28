@@ -22,11 +22,13 @@
             android:id="@+id/add_hospital"
             style="@style/Main_Icon_Style"
             android:drawableTop="@mipmap/hospital"
+            android:visibility="invisible"
             android:text="@string/add_hospital" />
         <TextView
             android:id="@+id/add_department"
             style="@style/Main_Icon_Style"
             android:drawableTop="@mipmap/department"
+            android:visibility="invisible"
             android:text="@string/add_department" />
 
     </LinearLayout>

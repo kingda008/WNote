@@ -75,6 +75,12 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
 
         init();
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         citys = DbManager.getInstance().queryCitysName();
         if (citys != null && citys.size() > 0) {
             mounth.setClickable(true);
@@ -82,7 +88,6 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
         } else {
             mounth.setClickable(false);
         }
-
     }
 
     private void init() {
@@ -94,6 +99,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
 
         ((TextView) findViewById(R.id.tv_order_mounth_content)).setOnClickListener(this);
         findViewById(R.id.btn_statistics).setOnClickListener(this);
+        findViewById(R.id.btn_delete_all).setOnClickListener(this);
 
         mounth = (TextView) findViewById(R.id.tv_order_mounth_content);
 
@@ -164,6 +170,21 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
                 intent.putExtra("endTime", endTime);
                 startActivity(intent);
                 break;
+            case R.id.btn_delete_all:
+                showDeleteDialog("确定清空所有订单吗？", new OnDeleteLitener() {
+                    @Override
+                    public void doDelete() {
+                        if (orders != null && orders.size() > 0) {
+                            for (Order order : orders) {
+                                DbManager.getInstance().deleteOrder(order);
+
+                                updateOrderList();
+                            }
+                        }
+                    }
+                });
+                break;
+
             case R.id.tv_order_mounth_content:
                 Calendar ca = Calendar.getInstance();
 

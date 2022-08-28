@@ -6,13 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.style.TtsSpan;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.baoge.wnotes.R;
 import com.baoge.wnotes.base.BaseActivity;
 import com.baoge.wnotes.db.Order;
+import com.baoge.wnotes.order.AddOrderActivity;
 import com.baoge.wnotes.util.DateFormat;
+import com.baoge.wnotes.util.LogUtil;
+import com.baoge.wnotes.util.ToastUtil;
 import com.baoge.wnotes.view.StaisticTv;
 
 public class OrderInfoAcitivity extends BaseActivity {
@@ -27,7 +32,7 @@ public class OrderInfoAcitivity extends BaseActivity {
 
         rootGroup = (LinearLayout) findViewById(R.id.lay_root);
 
-        updateView();
+
 
     }
 
@@ -37,22 +42,31 @@ public class OrderInfoAcitivity extends BaseActivity {
         updateView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateView();
+    }
+
     private void updateView() {
-        String orderJson = getIntent().getStringExtra("orderjson");
+        final String orderJson = getIntent().getStringExtra("orderjson");
+        LogUtil.i(orderJson);
+        View edit = rootGroup.getChildAt(0);
         if (!TextUtils.isEmpty(orderJson)) {
             Order order = JSON.parseObject(orderJson, Order.class);
+            rootGroup.removeViewAt(0);
 
             StaisticTv view = new StaisticTv(OrderInfoAcitivity.this);
             view.setContent("城市", order.getCity());
             rootGroup.addView(view);
 
-            view = new StaisticTv(OrderInfoAcitivity.this);
-            view.setContent("医院", order.getHospital());
-            rootGroup.addView(view);
-
-            view = new StaisticTv(OrderInfoAcitivity.this);
-            view.setContent("科室", order.getDepartMent());
-            rootGroup.addView(view);
+//            view = new StaisticTv(OrderInfoAcitivity.this);
+//            view.setContent("医院", order.getHospital());
+//            rootGroup.addView(view);
+//
+//            view = new StaisticTv(OrderInfoAcitivity.this);
+//            view.setContent("科室", order.getDepartMent());
+//            rootGroup.addView(view);
 
             view = new StaisticTv(OrderInfoAcitivity.this);
             view.setContent("技师", order.getTechnician());
@@ -98,6 +112,20 @@ public class OrderInfoAcitivity extends BaseActivity {
             view.setContent("其他金额", order.getOtherPrice() + "");
             rootGroup.addView(view);
 
+
+            rootGroup.addView(edit);
+
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                     Intent intent = new Intent(OrderInfoAcitivity.this, AddOrderActivity.class);
+                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                     intent.putExtra("order",orderJson);
+                     startActivity(intent);
+                     finish();
+                }
+            });
         }
     }
 }

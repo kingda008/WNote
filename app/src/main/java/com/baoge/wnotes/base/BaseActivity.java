@@ -74,8 +74,14 @@ public class BaseActivity extends AppCompatActivity {
         void doDelete();
     }
     public void showDeleteDialog(final OnDeleteLitener deleteLitener) {
+
+        showDeleteDialog("确定删除吗？",deleteLitener);
+    }
+
+
+    public void showDeleteDialog(String title,final OnDeleteLitener deleteLitener) {
         new MaterialDialog.Builder(BaseActivity.this)
-                .title("确定删除吗？").content("删除后无法找回！")
+                .title(title).content("删除后无法找回！")
                 .cancelable(false)
                 .positiveText("确定")
                 .negativeText("取消")
@@ -98,5 +104,4 @@ public class BaseActivity extends AppCompatActivity {
                 })
                 .build().show();
     }
-
 }

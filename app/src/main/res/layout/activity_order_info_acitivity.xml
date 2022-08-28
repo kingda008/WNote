@@ -15,6 +15,13 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <Button android:id="@+id/btn_edit"
+            style="@style/BtnStyle"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:text="编辑"
+            />
 
     </LinearLayout>
 </ScrollView>

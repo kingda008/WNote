@@ -28,6 +28,7 @@
         android:layout_below="@id/tv_city_choise"
         android:layout_alignLeft="@id/tv_city_choise"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:text="医院" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -38,6 +39,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/tv_hospital_choise"
         android:background="@drawable/spinner_drop_down_shape"
+        android:visibility="gone"
         android:spinnerMode="dialog" />
 
     <TextView
@@ -46,6 +48,7 @@
         android:layout_below="@id/tv_hospital_choise"
         android:layout_alignLeft="@id/tv_city_choise"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:text="科室" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -56,6 +59,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/tv_department_choise"
         android:background="@drawable/spinner_drop_down_shape"
+        android:visibility="gone"
         android:spinnerMode="dialog" />
 
     <TextView

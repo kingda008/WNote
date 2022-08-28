@@ -13,6 +13,7 @@
 
     <TextView android:id="@+id/hospital"
         style="@style/Tv_Order_Item"
+        android:visibility="gone"
         />
 
     <TextView android:id="@+id/device"

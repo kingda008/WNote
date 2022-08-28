@@ -1,7 +1,6 @@
 package com.baoge.wnotes.order;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,16 +11,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatSpinner;
-
-import com.alibaba.fastjson.JSON;
 import com.baoge.wnotes.Constants;
 import com.baoge.wnotes.R;
 import com.baoge.wnotes.base.BaseActivity;
-import com.baoge.wnotes.db.Department;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.manager.DbManager;
-import com.baoge.wnotes.util.CommUtil;
 import com.baoge.wnotes.util.DataUtil;
 import com.baoge.wnotes.util.DateFormat;
 import com.baoge.wnotes.util.LogUtil;
@@ -31,23 +25,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddOrderActivity extends BaseActivity implements View.OnClickListener {
-    private AppCompatSpinner citySpinner, technicianSpinner, installerSpinner, deviceSpinner;
-    private List<String> citys = null;
+import androidx.appcompat.widget.AppCompatSpinner;
 
+public class AddOrderActivityOLD extends BaseActivity implements View.OnClickListener {
+    private AppCompatSpinner citySpinner, hospitalSpinner, departmentSpinner, technicianSpinner, installerSpinner, deviceSpinner;
+    private List<String> citys = null;
+    private List<String> hospitals = null;
+    private List<String> departments = null;
     private List<String> technicians = null;
     private List<String> installers = null;
     private List<String> devices = null;
 
     private ArrayAdapter<String> citySpinnerAdapter;
-
+    private ArrayAdapter<String> hospitalSpinnerAdapter;
+    private ArrayAdapter<String> departmentSpinnerAdapter;
     private ArrayAdapter<String> technicianSpinnerAdapter;
     private ArrayAdapter<String> installerSpinnerAdapter;
     private ArrayAdapter<String> deviceSpinnerAdapter;
 
 
-    private int citySpinnerSelectPosition = -1;
-    private int technicianSpinnerSelectPosition = -1;
+    private int citySpinnerSelectPosition = -1, hospitalSpinnerSelectPosition = -1;
+    private int departmentSpinnerSelectPosition = -1, technicianSpinnerSelectPosition = -1;
     private int installerSpinnerSelectPosition = -1, deviceSpinnerSelectPosition = -1;
 
 
@@ -58,9 +56,6 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
 
     private final String timeSelectTip = "请选择交易日期";
 
-
-    private Order editOrder;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,52 +63,12 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
 
         init();
         initSpinner();
-
-        switchEditModelIfNecessary(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        switchEditModelIfNecessary(intent);
-
-    }
-
-    /**
-     * 编辑模式
-     *
-     * @param intent
-     */
-    private void switchEditModelIfNecessary(Intent intent) {
-        String editOrderJson = intent.getStringExtra("order");
-        if (!TextUtils.isEmpty(editOrderJson)) {
-            editOrder = JSON.parseObject(editOrderJson, Order.class);
-
-
-            ((Button) findViewById(R.id.btn_add)).setText("保存");
-
-            citySpinner.setSelection(CommUtil.getPosition(citys, editOrder.getCity()));
-            technicianSpinner.setSelection(CommUtil.getPosition(technicians, editOrder.getTechnician()));
-            installerSpinner.setSelection(CommUtil.getPosition(installers, editOrder.getInstaller()));
-            deviceSpinner.setSelection(CommUtil.getPosition(devices, editOrder.getDevice()));
-
-            orderTime.setText(DateFormat.getDate(editOrder.getOrderTime(), DateFormat.FORMAT_YYYY_MM_DD));
-            priceEdt.setText(editOrder.getTransactionAmount() + "");
-            taxiPriceEdt.setText(editOrder.getTaxiFare() + "");
-            partPriceEdt.setText(editOrder.getPartPrice() + "");
-            supportEdt.setText(editOrder.getSupportPrice() + "");
-            if (!TextUtils.isEmpty(editOrder.getOtherContent())) {
-                otherTipEdt.setText(editOrder.getOtherContent());
-            }
-            if (editOrder.getOtherPrice() > 0) {
-                otherPriceEdt.setText(editOrder.getOtherPrice() + "");
-            }
-        }
     }
 
     private void init() {
         citySpinner = (AppCompatSpinner) findViewById(R.id.sp_city);
+        hospitalSpinner = (AppCompatSpinner) findViewById(R.id.sp_hospital);
+        departmentSpinner = (AppCompatSpinner) findViewById(R.id.sp_department);
         technicianSpinner = (AppCompatSpinner) findViewById(R.id.sp_technician);
         installerSpinner = (AppCompatSpinner) findViewById(R.id.sp_installer);
         deviceSpinner = (AppCompatSpinner) findViewById(R.id.sp_device);
@@ -142,7 +97,19 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             initCitySpinner();
             initTechnicianSpinner(citys.get(0));
             initStallerpinner(citys.get(0));
+            hospitals = DbManager.getInstance().queryHospitalNames(citys.get(0));
 
+
+            if (hospitals != null && hospitals.size() > 0) {
+
+                initHospitalSpinner(citys.get(0));
+                departments = DbManager.getInstance().queryDepartmentNames(citys.get(0), hospitals.get(0));
+                LogUtil.d("citySpinnerSelectPosition:" + citySpinnerSelectPosition);
+                LogUtil.d("hospitalSpinnerSelectPosition:" + hospitalSpinnerSelectPosition);
+                if (departments != null && departments.size() > 0) {
+                    initDepartMentSpinner(citys.get(0), hospitals.get(0));
+                }
+            }
 
         }
     }
@@ -159,7 +126,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 citySpinnerSelectPosition = position;
                 //刷新列表
 
-
+                initHospitalSpinner(citys.get(position));
             }
 
             @Override
@@ -167,6 +134,70 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 LogUtil.d("onNothingSelected");
             }
         });
+    }
+
+    private void initHospitalSpinner(String cityName) {
+        hospitalSpinnerSelectPosition = -1;
+        //先更新数据
+        hospitals = DbManager.getInstance().queryHospitalNames(cityName);
+
+        hospitalSpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, hospitals);
+
+        hospitalSpinner.setAdapter(hospitalSpinnerAdapter);
+
+
+        if (hospitals != null && hospitals.size() > 0) {
+
+            hospitalSpinner.setSelection(0);
+            hospitalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    LogUtil.d("hospital:" + hospitals.get(position));
+                    hospitalSpinnerSelectPosition = position;
+                    //刷新列表
+
+                    initDepartMentSpinner(citys.get(citySpinnerSelectPosition), hospitals.get(hospitalSpinnerSelectPosition));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    LogUtil.d("onNothingSelected");
+                }
+            });
+        } else {
+            hospitalSpinnerAdapter.clear();
+            hospitalSpinnerAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    private void initDepartMentSpinner(String cityName, String hospitalName) {
+        departmentSpinnerSelectPosition = -1;
+        //先更新数据
+        departments = DbManager.getInstance().queryDepartmentNames(cityName, hospitalName);
+        departmentSpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, departments);
+        departmentSpinner.setAdapter(departmentSpinnerAdapter);
+
+        if (departments != null && departments.size() > 0) {
+
+            departmentSpinner.setSelection(0);
+            departmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    LogUtil.d("departments:" + departments.get(position));
+                    departmentSpinnerSelectPosition = position;
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    LogUtil.d("onNothingSelected");
+                }
+            });
+        } else {
+            departmentSpinnerAdapter.clear();
+            departmentSpinnerAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initTechnicianSpinner(String city) {
@@ -283,7 +314,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 LogUtil.i("year:" + mYear);
                 LogUtil.i("mMonth:" + mMonth);
                 LogUtil.i("mDay:" + mDay);
-                new DatePickerDialog(AddOrderActivity.this, onDateSetListener, mYear, mMonth, mDay).show();
+                new DatePickerDialog(AddOrderActivityOLD.this, onDateSetListener, mYear, mMonth, mDay).show();
                 break;
             case R.id.btn_add:
                 saveOrder();
@@ -297,7 +328,14 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             ToastUtil.show("请先选择城市");
             return;
         }
-
+        if (hospitalSpinnerSelectPosition < 0) {
+            ToastUtil.show("请先选择医院");
+            return;
+        }
+        if (departmentSpinnerSelectPosition < 0) {
+            ToastUtil.show("请先选择科室");
+            return;
+        }
         if (technicianSpinnerSelectPosition < 0) {
             ToastUtil.show("请先选择技师");
             return;
@@ -321,16 +359,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             ToastUtil.show(timeSelectTip);
             return;
         }
-        Order order = null;
-        if (editOrder != null) {
-            order = editOrder;
-        } else {
-            order = new Order();
-        }
-
+        Order order = new Order();
         order.setCity(citys.get(citySpinnerSelectPosition));
-        order.setHospital("");
-        order.setDepartMent("");
+        order.setHospital(hospitals.get(hospitalSpinnerSelectPosition));
+        order.setDepartMent(departments.get(departmentSpinnerSelectPosition));
         order.setTechnician(technicians.get(technicianSpinnerSelectPosition));
         order.setInstaller(installers.get(installerSpinnerSelectPosition));
         order.setDevice(devices.get(deviceSpinnerSelectPosition));
@@ -389,6 +421,15 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        order.setType(Constants.OrderType.NEW);
+
+        boolean result = DbManager.getInstance().insertOrder(order);
+        if (result) {
+            ToastUtil.show("添加成功");
+        } else {
+            ToastUtil.show("添加失败");
+        }
+
         List<EditText> editTexts = new ArrayList<>();
         editTexts.add(priceEdt);
         editTexts.add(taxiPriceEdt);
@@ -399,31 +440,5 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         clearEditText(editTexts);
 
 
-        if (editOrder != null) {
-            order.setType(Constants.OrderType.EDIT);
-        } else {
-            order.setType(Constants.OrderType.NEW);
-        }
-        boolean result = DbManager.getInstance().insertOrder(order);
-        if (result) {
-            if (editOrder != null) {
-                ToastUtil.show("保存成功");
-                finish();
-            } else {
-                ToastUtil.show("添加成功");
-            }
-        } else {
-            if (editOrder != null) {
-                ToastUtil.show("保存失败");
-            } else {
-                ToastUtil.show("添加失败");
-            }
-        }
-
-
-
-
     }
-
-
 }
