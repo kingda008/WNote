@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         init();
 
-//        showPassWordDialog();
+        showPassWordDialog();
     }
 
 

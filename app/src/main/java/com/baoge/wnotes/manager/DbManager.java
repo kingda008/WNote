@@ -436,7 +436,9 @@ public class DbManager {
         return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city)).where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
     }
 
-
+    public List<Order> queryOrders( long startTime, long endTime) {
+        return daoSession.getOrderDao().queryBuilder() .where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+    }
     public void deleteOrder(Order order) {
         if (order != null) {
             daoSession.getOrderDao().delete(order);

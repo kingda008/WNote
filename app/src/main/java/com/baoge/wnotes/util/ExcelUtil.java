@@ -150,24 +150,45 @@ public class ExcelUtil {
                 WritableSheet sheet = writebook.getSheet(0);
 
                 for (int j = 0; j < orders.size(); j++) {
+
+
+
+
                     Order order = orders.get(j);
+
+                    int  totalMoney = order.getTransactionAmount();
+                    int taxiMoney =   order.getTaxiFare();
+                    int  partDeviceMoney =  order.getPartPrice();
+                    int  otherMoney =   order.getOtherPrice();
+                    int  supportMoney =   order.getSupportPrice();
+                    int deviceMoneyDB = order.getDevicePrice();
+
+                    int installMoney =  order.getInstallPrice();
+                    int  invoceMoney =  order.getInvoice();
+
+
                     List<String> list = new ArrayList<>();
                     list.add(DateFormat.getDate(order.getOrderTime(), DateFormat.FORMAT_YYYY_MM_DD));
                     list.add(order.getCity());
-                    list.add(order.getHospital());
-                    list.add(order.getDepartMent());
                     list.add(order.getInstaller());
                     list.add(order.getTechnician());
+
+                     int profit = totalMoney- deviceMoneyDB - partDeviceMoney - installMoney - supportMoney - taxiMoney - otherMoney-invoceMoney;
+
+                    list.add(CommUtil.parsePrice(profit/3.0));
                     list.add(order.getDevice());
                     list.add(order.getTransactionAmount() + "");
                     list.add(order.getTaxiFare() + "");
+                    list.add(order.getSupportName() + "");
                     list.add(order.getSupportPrice() + "");
                     list.add(order.getPartPrice() + "");
+                    list.add(order.getInvoice() + "");
                     list.add(order.getOtherPrice() + "");
-                    int toMe = order.getTransactionAmount() - DbManager.getInstance().queryDevicePrice(order.getDevice()) - order.getTaxiFare()
-                            - order.getSupportPrice() - order.getPartPrice() - order.getOtherPrice();
-                    toMe = toMe * 2 / 3 + order.getTaxiFare() + order.getSupportPrice();
-                    list.add(toMe + "");
+
+
+                    double toMe = profit * 2 / 3.0 + taxiMoney + supportMoney;
+
+                    list.add(CommUtil.parsePrice(toMe));
 
                     for (int i = 0; i < list.size(); i++) {
                         sheet.addCell(new Label(i, j + 1, list.get(i), arial12format));

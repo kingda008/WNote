@@ -37,7 +37,7 @@
         android:layout_toRightOf="@id/tv_price_title"
         android:background="@drawable/bg_shape_unchecked"
         android:inputType="numberDecimal"
-        android:hint="请输入价格" />
+        android:hint="请输入底价" />
 
     <Button
         android:id="@+id/btn_add"

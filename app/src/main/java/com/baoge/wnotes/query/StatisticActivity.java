@@ -14,6 +14,7 @@ import com.baoge.wnotes.R;
 import com.baoge.wnotes.base.BaseActivity;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.manager.DbManager;
+import com.baoge.wnotes.util.CommUtil;
 import com.baoge.wnotes.util.DataUtil;
 import com.baoge.wnotes.util.DateFormat;
 import com.baoge.wnotes.util.ExcelUtil;
@@ -69,10 +70,19 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
         LogUtil.i("statistic endTime:" + endTime);
 
         boolean isInvalid = false;
-        if (!TextUtils.isEmpty(city) && startTime > 0 && endTime > 0) {
-            orderList = DbManager.getInstance().queryOrders(city, startTime, endTime);
+        if ( startTime > 0 && endTime > 0) {
+            if (TextUtils.isEmpty(city)) {
+                orderList = DbManager.getInstance().queryOrders(startTime, endTime);
+            } else {
+                orderList = DbManager.getInstance().queryOrders(city, startTime, endTime);
+            }
 
             StaisticTv staisticTv = new StaisticTv(StatisticActivity.this);
+            staisticTv.setContent("城市", TextUtils.isEmpty(city) ? "所有城市" : city);
+            rootLayout.addView(staisticTv);
+
+
+            staisticTv = new StaisticTv(StatisticActivity.this);
             staisticTv.setContent("开始时间", DateFormat.getDate(startTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS));
             rootLayout.addView(staisticTv);
 
@@ -95,7 +105,9 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 int deviceMoney = 0;
                 int supportMoney = 0;
                 int invoceMoney = 0;
-                HashMap<String, Integer> technicianMoneyMap = new HashMap<>();
+
+                int toMe = 0;
+                HashMap<String, Double> technicianMoneyMap = new HashMap<>();
                 HashMap<String, Integer> departMentMoneyMap = new HashMap<>();
 
 
@@ -105,12 +117,12 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                     partDeviceMoney = partDeviceMoney + order.getPartPrice();
                     otherMoney = otherMoney + order.getOtherPrice();
                     supportMoney = supportMoney + order.getSupportPrice();
-                    int deviceMoneyDB = DbManager.getInstance().queryDevicePrice(order.getDevice());
+                    int deviceMoneyDB = order.getDevicePrice();
                     deviceMoney = deviceMoney + deviceMoneyDB;
                     installMoney = installMoney + order.getInstallPrice();
-                    invoceMoney = invoceMoney+order.getInvoice();
+                    invoceMoney = invoceMoney + order.getInvoice();
 
-                    int technicianMoney = (order.getTransactionAmount() - order.getTaxiFare() - order.getPartPrice() - order.getInstallPrice() - order.getOtherPrice() - order.getSupportPrice() - deviceMoneyDB) / 3;
+                    double technicianMoney = (order.getTransactionAmount() - order.getTaxiFare() - order.getPartPrice() - order.getInstallPrice() - order.getOtherPrice() - order.getSupportPrice() - deviceMoneyDB - order.getInvoice()) / 3.0;
                     if (technicianMoneyMap.containsKey(order.getTechnician())) {
                         technicianMoneyMap.put(order.getTechnician(), technicianMoneyMap.get(order.getTechnician()) + technicianMoney);
                     } else {
@@ -150,7 +162,11 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 rootLayout.addView(staisticTv);
 
                 staisticTv = new StaisticTv(StatisticActivity.this);
-                staisticTv.setContent("发票成本", supportMoney + "");
+                staisticTv.setContent("发票成本", invoceMoney + "");
+                rootLayout.addView(staisticTv);
+
+                staisticTv = new StaisticTv(StatisticActivity.this);
+                staisticTv.setContent("打车成本", taxiMoney + "");
                 rootLayout.addView(staisticTv);
 
 
@@ -159,12 +175,17 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                 rootLayout.addView(staisticTv);
 
                 staisticTv = new StaisticTv(StatisticActivity.this);
-                double profit = totalMoney - deviceMoney - partDeviceMoney - installMoney - supportMoney - taxiMoney - otherMoney-invoceMoney;
+                int profit = totalMoney - deviceMoney - partDeviceMoney - installMoney - supportMoney - taxiMoney - otherMoney - invoceMoney;
                 staisticTv.setContent("利润总数", profit + "");
                 rootLayout.addView(staisticTv);
 
                 staisticTv = new StaisticTv(StatisticActivity.this);
-                staisticTv.setContent("利润均数", profit / 3 + "");
+                staisticTv.setContent("利润均数", CommUtil.parsePrice(profit / 3.0));
+                rootLayout.addView(staisticTv);
+
+
+                staisticTv = new StaisticTv(StatisticActivity.this);
+                staisticTv.setContent("给我的", CommUtil.parsePrice((profit * 2 / 3.0 + taxiMoney + supportMoney)));
                 rootLayout.addView(staisticTv);
 
                 DividingLine dividingLine = new DividingLine(StatisticActivity.this);
@@ -177,7 +198,7 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                     double money = technicianMoneyMap.get(name);
 
                     staisticTv = new StaisticTv(StatisticActivity.this);
-                    staisticTv.setContent(name, money + "");
+                    staisticTv.setContent(name, CommUtil.parsePrice(money));
                     rootLayout.addView(staisticTv);
                 }
 
@@ -209,8 +230,8 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
             case R.id.btn_share:
 
 
-                String excelFileName = city + "_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
-                String[] title = {"时间", "城市", "医院", "科室", "装机师", "技师", "设备", "交易金额", "打车", "支持", "配件费用", "其他费用", "给我"};
+                String excelFileName = (TextUtils.isEmpty(city)?"所有城市":city) + "_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
+                String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "交易金额", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我"};
                 String sheetName = "明细";
 
                 String filePaths = Constants.EXCEL_DIR + File.separator + excelFileName;

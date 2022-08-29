@@ -28,10 +28,18 @@ android {
 //    }
 
     greendao {
-        schemaVersion 19
+        schemaVersion 20
         daoPackage "com.baoge.wnotes.dao"
         targetGenDir "src/main/java"
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            //project.name
+            outputFileName =  "WNote.apk"
+        }
+    }
+
 }
 
 dependencies {

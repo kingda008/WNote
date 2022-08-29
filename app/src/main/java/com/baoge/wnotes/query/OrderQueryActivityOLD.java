@@ -1,23 +1,19 @@
 package com.baoge.wnotes.query;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.baoge.wnotes.R;
@@ -25,11 +21,9 @@ import com.baoge.wnotes.adapter.OrderListAdapter;
 import com.baoge.wnotes.base.BaseActivity;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.manager.DbManager;
-import com.baoge.wnotes.order.AddOrderActivity;
 import com.baoge.wnotes.util.DateFormat;
 import com.baoge.wnotes.util.LogUtil;
 import com.baoge.wnotes.util.ToastUtil;
-import com.baoge.wnotes.view.RecycleViewDivider;
 import com.baoge.wnotes.view.SpaceItemDecoration;
 
 import java.util.Calendar;
@@ -37,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class OrderQueryActivity extends BaseActivity implements View.OnClickListener {
+public class OrderQueryActivityOLD extends BaseActivity implements View.OnClickListener {
     private AppCompatSpinner spinner;
     private List<String> citys = null;
     private ArrayAdapter<String> citySpinnerAdapter;
@@ -82,12 +76,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         citys = DbManager.getInstance().queryCitysName();
-        citys.add(0, "所有城市");
-
         if (citys != null && citys.size() > 0) {
-            for (int i = 0; i < citys.size(); i++) {
-                LogUtil.i(citys.get(i));
-            }
             mounth.setClickable(true);
             initCityAdapter();
         } else {
@@ -120,7 +109,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(View view, int position) {
 
 
-                Intent intent = new Intent(OrderQueryActivity.this, OrderInfoAcitivity.class);
+                Intent intent = new Intent(OrderQueryActivityOLD.this, OrderInfoAcitivity.class);
                 intent.putExtra("orderjson", JSON.toJSONString(orders.get(position)));
                 startActivity(intent);
             }
@@ -169,8 +158,8 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
 
-                Intent intent = new Intent(OrderQueryActivity.this, StatisticActivity.class);
-                intent.putExtra("city", citySpinnerSelectPosition == 0 ? "" : citys.get(citySpinnerSelectPosition));
+                Intent intent = new Intent(OrderQueryActivityOLD.this, StatisticActivity.class);
+                intent.putExtra("city", citys.get(citySpinnerSelectPosition));
                 intent.putExtra("startTime", startTime);
                 intent.putExtra("endTime", endTime);
                 startActivity(intent);
@@ -200,7 +189,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
                 LogUtil.i("mMonth:" + mMonth);
                 LogUtil.i("mDay:" + mDay);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(OrderQueryActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, onDateSetListener, mYear, mMonth, mDay);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(OrderQueryActivityOLD.this, DatePickerDialog.THEME_HOLO_LIGHT, onDateSetListener, mYear, mMonth, mDay);
                 datePickerDialog.show();
 
 
@@ -271,11 +260,8 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
 
             LogUtil.i("start time:" + startTime + "  , " + DateFormat.getDate(startTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS));
             LogUtil.i("end time:" + endTime + "  , " + DateFormat.getDate(endTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS));
-            if (citySpinnerSelectPosition == 0) {
-                orders = DbManager.getInstance().queryOrders(startTime, endTime);
-            } else {
-                orders = DbManager.getInstance().queryOrders(citys.get(citySpinnerSelectPosition), startTime, endTime);
-            }
+            orders = DbManager.getInstance().queryOrders(citys.get(citySpinnerSelectPosition), startTime, endTime);
+
             orderListAdapter.setOrders(orders);
             orderListAdapter.notifyDataSetChanged();
 

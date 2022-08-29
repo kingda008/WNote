@@ -64,6 +64,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
     private Order editOrder;
     private CheckBox supportCB;
 
+    private String defaultTip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +108,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             partPriceEdt.setText(editOrder.getPartPrice() + "");
             supportEdt.setText(editOrder.getSupportPrice() + "");
             invoiceEdt.setText(editOrder.getInvoice() + "");
-            nameEdt.setText(editOrder.getName());
+            nameEdt.setText(editOrder.getSupportName());
             supportCB.setChecked(editOrder.getIsAleadySupport());
 
             if (!TextUtils.isEmpty(editOrder.getOtherContent())) {
@@ -153,6 +154,8 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         });
+
+        defaultTip = orderTime.getText().toString();
     }
 
     private void initSpinner() {
@@ -180,6 +183,8 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 citySpinnerSelectPosition = position;
                 //刷新列表
 
+                initTechnicianSpinner(citys.get(position));
+                initStallerpinner(citys.get(position));
 
             }
 
@@ -301,6 +306,13 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
                 int mYear = ca.get(Calendar.YEAR);
                 int mMonth = ca.get(Calendar.MONTH);
                 int mDay = ca.get(Calendar.DAY_OF_MONTH);
+
+                if(!TextUtils.equals(orderTime.getText().toString(),defaultTip)){
+                    String[] date = orderTime.getText().toString().split("-");
+                    mYear = Integer.parseInt(date[0]);
+                    mMonth = Integer.parseInt(date[1])-1;
+                    mDay = Integer.parseInt(date[2]);
+                }
                 LogUtil.i("year:" + mYear);
                 LogUtil.i("mMonth:" + mMonth);
                 LogUtil.i("mDay:" + mDay);
@@ -361,17 +373,17 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         order.setTechnician(technicians.get(technicianSpinnerSelectPosition));
         order.setInstaller(installers.get(installerSpinnerSelectPosition));
         order.setDevice(devices.get(deviceSpinnerSelectPosition));
+        order.setDevicePrice(DbManager.getInstance().queryDevicePrice(devices.get(deviceSpinnerSelectPosition)));
         order.setOrderAddTime(System.currentTimeMillis());
         order.setInstallPrice(DataUtil.getInstallPrice(citys.get(citySpinnerSelectPosition)));
         order.setOrderTime(DateFormat.getDate(orderTime.getText().toString(), DateFormat.FORMAT_YYYY_MM_DD));
         order.setTransactionAmount(Integer.parseInt(priceEdt.getText().toString()));
-        order.setName(nameEdt.getText().toString());
+        order.setSupportName(nameEdt.getText().toString());
         order.setIsAleadySupport(supportCB.isChecked());
 
-        int invoice = 0;
+
         if(!TextUtils.isEmpty(invoiceEdt.getText().toString())){
-            invoice = Integer.parseInt(invoiceEdt.getText().toString());
-            order.setInvoice(invoice);
+            order.setInvoice(Integer.parseInt(invoiceEdt.getText().toString()));
         }
 
         String taxiPrice = taxiPriceEdt.getText().toString();
@@ -401,24 +413,9 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        int profit = Integer.parseInt(priceEdt.getText().toString()) - DbManager.getInstance().queryDevicePrice(devices.get(deviceSpinnerSelectPosition))-invoice;
-
-        if (!TextUtils.isEmpty(taxiPriceEdt.getText().toString())) {
-            profit = profit - Integer.parseInt(taxiPriceEdt.getText().toString());
-        }
-
-        if (!TextUtils.isEmpty(partPriceEdt.getText().toString())) {
-            profit = profit - Integer.parseInt(partPriceEdt.getText().toString());
-        }
-
-        if (!TextUtils.isEmpty(supportEdt.getText().toString())) {
-            profit = profit - Integer.parseInt(supportEdt.getText().toString());
-        }
+        int profit = order.getTransactionAmount() - order.getDevicePrice() - order.getTaxiFare() - order.getPartPrice()-order.getSupportPrice()-order.getInstallPrice()-order.getOtherPrice() - order.getInvoice();
 
 
-        if (!TextUtils.isEmpty(otherPriceEdt.getText().toString())) {
-            profit = profit - Integer.parseInt(otherPriceEdt.getText().toString());
-        }
         if (profit < 0) {
             ToastUtil.show("利润为负数,请检查价格是否正确");
             return;
@@ -431,8 +428,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         editTexts.add(otherPriceEdt);
         editTexts.add(supportEdt);
         editTexts.add(otherTipEdt);
+        editTexts.add(nameEdt);
+        editTexts.add(invoiceEdt);
         clearEditText(editTexts);
-
+        supportCB.setChecked(false);
 
         if (editOrder != null) {
             order.setType(Constants.OrderType.EDIT);

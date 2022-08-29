@@ -20,6 +20,7 @@ public class Order {
     private String technician;
     private String installer;
     private String device;
+    private int devicePrice;
 
     //交易金额
     private int transactionAmount;
@@ -29,20 +30,24 @@ public class Order {
     private int partPrice;
     //装机费
     private int installPrice;
+    //支持费用
     private int supportPrice;
+    //支持姓名
+    private String supportName;
     private String otherContent;
     private int otherPrice;
     private int invoice;//发票
-    private String name;
+
     private boolean isAleadySupport;
     //新增，编辑，退货
     private int type;
-    @Generated(hash = 1927955744)
+    @Generated(hash = 1889993842)
     public Order(Long id, long orderAddTime, long orderTime, String city,
             String hospital, String departMent, String technician, String installer,
-            String device, int transactionAmount, int taxiFare, int partPrice,
-            int installPrice, int supportPrice, String otherContent, int otherPrice,
-            int invoice, String name, boolean isAleadySupport, int type) {
+            String device, int devicePrice, int transactionAmount, int taxiFare,
+            int partPrice, int installPrice, int supportPrice, String supportName,
+            String otherContent, int otherPrice, int invoice,
+            boolean isAleadySupport, int type) {
         this.id = id;
         this.orderAddTime = orderAddTime;
         this.orderTime = orderTime;
@@ -52,15 +57,16 @@ public class Order {
         this.technician = technician;
         this.installer = installer;
         this.device = device;
+        this.devicePrice = devicePrice;
         this.transactionAmount = transactionAmount;
         this.taxiFare = taxiFare;
         this.partPrice = partPrice;
         this.installPrice = installPrice;
         this.supportPrice = supportPrice;
+        this.supportName = supportName;
         this.otherContent = otherContent;
         this.otherPrice = otherPrice;
         this.invoice = invoice;
-        this.name = name;
         this.isAleadySupport = isAleadySupport;
         this.type = type;
     }
@@ -121,6 +127,12 @@ public class Order {
     public void setDevice(String device) {
         this.device = device;
     }
+    public int getDevicePrice() {
+        return this.devicePrice;
+    }
+    public void setDevicePrice(int devicePrice) {
+        this.devicePrice = devicePrice;
+    }
     public int getTransactionAmount() {
         return this.transactionAmount;
     }
@@ -151,6 +163,12 @@ public class Order {
     public void setSupportPrice(int supportPrice) {
         this.supportPrice = supportPrice;
     }
+    public String getSupportName() {
+        return this.supportName;
+    }
+    public void setSupportName(String supportName) {
+        this.supportName = supportName;
+    }
     public String getOtherContent() {
         return this.otherContent;
     }
@@ -169,12 +187,6 @@ public class Order {
     public void setInvoice(int invoice) {
         this.invoice = invoice;
     }
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
     public boolean getIsAleadySupport() {
         return this.isAleadySupport;
     }
@@ -187,7 +199,6 @@ public class Order {
     public void setType(int type) {
         this.type = type;
     }
-
 
 
 }

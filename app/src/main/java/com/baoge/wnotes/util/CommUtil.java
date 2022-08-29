@@ -2,9 +2,11 @@ package com.baoge.wnotes.util;
 
 import android.text.TextUtils;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CommUtil {
+   private static DecimalFormat decimalFormat=new DecimalFormat(".0");
     public static int getPosition(List<String> list,String content){
         if(list==null||list.size()<1|| TextUtils.isEmpty(content)){
             return -1;
@@ -19,4 +21,10 @@ public class CommUtil {
 
         return positon;
     }
+
+    public static String parsePrice(double price){
+        return decimalFormat.format(price);
+    }
+
+
 }
