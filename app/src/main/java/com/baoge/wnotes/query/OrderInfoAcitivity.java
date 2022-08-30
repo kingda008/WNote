@@ -26,22 +26,14 @@ public class OrderInfoAcitivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.i("oncreate");
         setContentView(R.layout.activity_order_info_acitivity);
 
         rootGroup = (LinearLayout) findViewById(R.id.lay_root);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
         updateView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateView();
-    }
+
 
     private void updateView() {
         final String orderJson = getIntent().getStringExtra("orderjson");
@@ -49,7 +41,7 @@ public class OrderInfoAcitivity extends BaseActivity {
         View edit = rootGroup.getChildAt(0);
         if (!TextUtils.isEmpty(orderJson)) {
             Order order = JSON.parseObject(orderJson, Order.class);
-            rootGroup.removeViewAt(0);
+            rootGroup.removeAllViews();
 
             StaisticTv view = new StaisticTv(OrderInfoAcitivity.this);
             view.setContent("城市", order.getCity());

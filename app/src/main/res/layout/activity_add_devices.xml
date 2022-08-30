@@ -4,55 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20px"
+
     tools:context=".addinfo.AddDevicesActivity">
 
-
-    <TextView
-        android:id="@+id/tv_name_title"
-        style="@style/Tv_Title_Style"
-        android:text="名称" />
-
-    <EditText
-        android:id="@+id/edt_name"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_name_title"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_name_title"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入设备名称" />
-
-    <TextView
-        android:id="@+id/tv_price_title"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_name_title"
-        android:layout_marginTop="20dp"
-        android:text="价格" />
-
-    <EditText
-        android:id="@+id/edt_price"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_price_title"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_price_title"
-        android:background="@drawable/bg_shape_unchecked"
-        android:inputType="numberDecimal"
-        android:hint="请输入底价" />
-
-    <Button
-        android:id="@+id/btn_add"
-        style="@style/BtnStyle"
+    <com.baoge.wnotes.view.ToolBar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_below="@id/tv_price_title"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_btn"
-        android:text="@string/add" />
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:padding="20px">
+
+        <TextView
+            android:id="@+id/tv_name_title"
+            style="@style/Tv_Title_Style"
+            android:text="名称" />
+
+        <EditText
+            android:id="@+id/edt_name"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_name_title"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_name_title"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入设备名称" />
+
+        <TextView
+            android:id="@+id/tv_price_title"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_name_title"
+            android:layout_marginTop="20dp"
+            android:text="价格" />
+
+        <EditText
+            android:id="@+id/edt_price"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_price_title"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_price_title"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入底价"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/BtnStyle"
+            android:layout_width="match_parent"
+            android:layout_below="@id/tv_price_title"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_btn"
+            android:text="@string/add" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_add"
-        android:layout_marginTop="30dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_add"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
 </RelativeLayout>

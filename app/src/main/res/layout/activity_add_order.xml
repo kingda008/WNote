@@ -4,315 +4,329 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20px"
     tools:context=".order.AddOrderActivity">
 
-    <TextView
-        android:id="@+id/tv_city_choise"
-        style="@style/Tv_Title_Style"
-        android:text="城市" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_city"
+    <com.baoge.wnotes.view.ToolBar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_city_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_city_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:spinnerMode="dialog" />
+        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/tv_hospital_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_city_choise"
-        android:layout_alignLeft="@id/tv_city_choise"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:text="医院" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_hospital"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_hospital_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_hospital_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:visibility="gone"
-        android:spinnerMode="dialog" />
-
-    <TextView
-        android:id="@+id/tv_department_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_hospital_choise"
-        android:layout_alignLeft="@id/tv_city_choise"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:text="科室" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_department"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_department_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_department_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:visibility="gone"
-        android:spinnerMode="dialog" />
-
-    <TextView
-        android:id="@+id/tv_technician_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_department_choise"
-        android:layout_alignLeft="@id/tv_city_choise"
-        android:layout_marginTop="10dp"
-        android:text="技师" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_technician"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_technician_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_technician_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:spinnerMode="dialog" />
-
-    <TextView
-        android:id="@+id/tv_installer_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_technician_choise"
-        android:layout_alignLeft="@id/tv_city_choise"
-        android:layout_marginTop="10dp"
-        android:text="装机" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_installer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_installer_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_installer_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:spinnerMode="dialog" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:padding="20px">
 
 
-    <TextView
-        android:id="@+id/tv_device_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_installer_choise"
-        android:layout_alignLeft="@id/tv_installer_choise"
-        android:layout_marginTop="10dp"
-        android:text="设备" />
+        <TextView
+            android:id="@+id/tv_city_choise"
+            style="@style/Tv_Title_Style"
+            android:text="城市" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_device"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_device_choise"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_device_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:spinnerMode="dialog" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_city_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_city_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog" />
 
+        <TextView
+            android:id="@+id/tv_hospital_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_city_choise"
+            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_marginTop="10dp"
+            android:text="医院"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_order_time"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_device_choise"
-        android:layout_alignLeft="@id/tv_device_choise"
-        android:layout_marginTop="10dp"
-        android:text="日期" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_hospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_hospital_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_hospital_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_order_time_content"
-        style="@style/Tv_Title_Style"
-        android:layout_width="wrap_content"
-        android:layout_alignTop="@id/tv_order_time"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_order_time"
+        <TextView
+            android:id="@+id/tv_department_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_hospital_choise"
+            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_marginTop="10dp"
+            android:text="科室"
+            android:visibility="gone" />
 
-        android:text=" " />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_department_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_department_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/tv_technician_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_department_choise"
+            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_marginTop="10dp"
+            android:text="技师" />
 
-    <TextView
-        android:id="@+id/tv_name"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_order_time"
-        android:layout_alignLeft="@id/tv_order_time"
-        android:layout_marginTop="10dp"
-        android:text="姓名" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_technician"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_technician_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_technician_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog" />
 
-    <EditText
-        android:id="@+id/edt_name"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_name"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_name"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入姓名"  />
+        <TextView
+            android:id="@+id/tv_installer_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_technician_choise"
+            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_marginTop="10dp"
+            android:text="装机" />
 
-
-    <TextView
-        android:id="@+id/tv_price"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_name"
-        android:layout_alignLeft="@id/tv_order_time"
-        android:layout_marginTop="10dp"
-        android:text="金额" />
-
-    <EditText
-        android:id="@+id/edt_price"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_price"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_price"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入金额"
-        android:inputType="numberDecimal" />
-
-
-    <TextView
-        android:id="@+id/tv_taxi_price"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_price"
-        android:layout_alignLeft="@id/tv_price"
-        android:layout_marginTop="10dp"
-        android:text="打车" />
-
-    <EditText
-        android:id="@+id/edt_taxi_price"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_taxi_price"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_taxi_price"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入打车费用"
-        android:inputType="numberDecimal" />
-
-    <TextView
-        android:id="@+id/tv_part_price"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_taxi_price"
-        android:layout_alignLeft="@id/tv_taxi_price"
-        android:layout_marginTop="10dp"
-        android:text="配件" />
-
-    <EditText
-        android:id="@+id/edt_part_price"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_part_price"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_part_price"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入配件金额"
-        android:inputType="numberDecimal" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_installer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_installer_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_installer_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog" />
 
 
-    <TextView
-        android:id="@+id/tv_invoice"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_part_price"
-        android:layout_alignLeft="@id/tv_part_price"
-        android:layout_marginTop="10dp"
-        android:text="发票" />
+        <TextView
+            android:id="@+id/tv_device_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_installer_choise"
+            android:layout_alignLeft="@id/tv_installer_choise"
+            android:layout_marginTop="10dp"
+            android:text="设备" />
 
-    <EditText
-        android:id="@+id/edt_invoice"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_invoice"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_invoice"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入支持金额"
-        android:inputType="numberDecimal" />
-
-
-
-    <TextView
-        android:id="@+id/tv_support"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_invoice"
-        android:layout_alignLeft="@id/tv_part_price"
-        android:layout_marginTop="10dp"
-        android:text="支持" />
-
-    <EditText
-        android:id="@+id/edt_support"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_support"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_support"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入支持金额"
-        android:inputType="numberDecimal" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_device_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_device_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog" />
 
 
-    <TextView
-        android:id="@+id/tv_is_support"
-        style="@style/Tv_Title_Style"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/tv_support"
-        android:layout_alignLeft="@id/tv_part_price"
-        android:layout_marginTop="10dp"
-        android:text="是否支持" />
+        <TextView
+            android:id="@+id/tv_order_time"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_device_choise"
+            android:layout_alignLeft="@id/tv_device_choise"
+            android:layout_marginTop="10dp"
+            android:text="日期" />
 
-    <CheckBox
-        android:id="@+id/cb_is_support"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_is_support"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_is_support"  />
+        <TextView
+            android:id="@+id/tv_order_time_content"
+            style="@style/Tv_Title_Style"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@id/tv_order_time"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_order_time"
 
-
-    <TextView
-        android:id="@+id/tv_other_tip"
-        style="@style/Tv_Title_Style"
-        android:layout_below="@id/tv_is_support"
-        android:layout_alignLeft="@id/tv_support"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:text="其他描述" />
+            android:text=" " />
 
 
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_order_time"
+            android:layout_alignLeft="@id/tv_order_time"
+            android:layout_marginTop="10dp"
+            android:text="姓名" />
 
-    <EditText
-        android:id="@+id/edt_other_tip"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_other_tip"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_other_tip"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="如无支出可不填"  />
-    <TextView
-        android:id="@+id/tv_other_price"
-        style="@style/Tv_Title_Style"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/tv_other_tip"
-        android:layout_alignLeft="@id/tv_other_tip"
-        android:layout_marginTop="10dp"
-        android:text="其他金额" />
+        <EditText
+            android:id="@+id/edt_name"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_name"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入姓名" />
 
-    <EditText
-        android:id="@+id/edt_other_price"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/tv_other_price"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tv_other_price"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="如无支出可不填"
-        android:inputType="numberDecimal" />
-    <Button
-        android:id="@+id/btn_add"
-        style="@style/BtnStyle"
-        android:layout_width="match_parent"
-        android:layout_below="@id/tv_other_price"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_btn"
-        android:text="@string/add" />
 
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_name"
+            android:layout_alignLeft="@id/tv_order_time"
+            android:layout_marginTop="10dp"
+            android:text="金额" />
+
+        <EditText
+            android:id="@+id/edt_price"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_price"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_price"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入金额"
+            android:inputType="numberDecimal" />
+
+
+        <TextView
+            android:id="@+id/tv_taxi_price"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_price"
+            android:layout_alignLeft="@id/tv_price"
+            android:layout_marginTop="10dp"
+            android:text="打车" />
+
+        <EditText
+            android:id="@+id/edt_taxi_price"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_taxi_price"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_taxi_price"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入打车费用"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/tv_part_price"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_taxi_price"
+            android:layout_alignLeft="@id/tv_taxi_price"
+            android:layout_marginTop="10dp"
+            android:text="配件" />
+
+        <EditText
+            android:id="@+id/edt_part_price"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_part_price"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_part_price"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入配件金额"
+            android:inputType="numberDecimal" />
+
+
+        <TextView
+            android:id="@+id/tv_invoice"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_part_price"
+            android:layout_alignLeft="@id/tv_part_price"
+            android:layout_marginTop="10dp"
+            android:text="发票" />
+
+        <EditText
+            android:id="@+id/edt_invoice"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_invoice"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_invoice"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入支持金额"
+            android:inputType="numberDecimal" />
+
+
+        <TextView
+            android:id="@+id/tv_support"
+            style="@style/Tv_Title_Style"
+            android:layout_below="@id/tv_invoice"
+            android:layout_alignLeft="@id/tv_part_price"
+            android:layout_marginTop="10dp"
+
+            android:text="支持" />
+
+        <EditText
+            android:id="@+id/edt_support"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_support"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_support"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入支持金额"
+            android:inputType="numberDecimal" />
+
+
+        <TextView
+            android:id="@+id/tv_is_support"
+            style="@style/Tv_Title_Style"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/tv_support"
+            android:layout_alignLeft="@id/tv_part_price"
+            android:layout_marginTop="10dp"
+            android:text="是否支持"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/cb_is_support"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_is_support"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_is_support"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_other_tip"
+            style="@style/Tv_Title_Style"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/tv_is_support"
+            android:layout_alignLeft="@id/tv_support"
+            android:layout_marginTop="10dp"
+            android:text="其他描述" />
+
+
+        <EditText
+            android:id="@+id/edt_other_tip"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_other_tip"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_other_tip"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="如无支出可不填" />
+
+        <TextView
+            android:id="@+id/tv_other_price"
+            style="@style/Tv_Title_Style"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/tv_other_tip"
+            android:layout_alignLeft="@id/tv_other_tip"
+            android:layout_marginTop="10dp"
+            android:text="其他金额" />
+
+        <EditText
+            android:id="@+id/edt_other_price"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/tv_other_price"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_other_price"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="如无支出可不填"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/BtnStyle"
+            android:layout_width="match_parent"
+            android:layout_below="@id/tv_other_price"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_btn"
+            android:text="@string/add" />
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -37,11 +37,18 @@ public class MyApplication extends Application {
             dir.mkdirs();
         }
 
-        dir = new File(Constants.EXCEL_DIR);
-        LogUtil.i(Constants.EXCEL_DIR);
+        dir = new File(Constants.FILE_DIR);
+        LogUtil.i(Constants.FILE_DIR);
         if (!(dir.exists() && dir.isDirectory())) {
             boolean result = dir.mkdirs();
             LogUtil.i("创建文件夹结果：" + result);
+        }
+
+        File[] files = dir.listFiles();
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                file.deleteOnExit();
+            }
         }
     }
 

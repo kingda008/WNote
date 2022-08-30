@@ -9,19 +9,33 @@
 
 
     <LinearLayout
-        android:id="@+id/lay_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20dp">
 
-        <Button android:id="@+id/btn_edit"
-            style="@style/BtnStyle"
+        >
+
+        <com.baoge.wnotes.view.ToolBar
+            android:id="@+id/tool_bar"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:text="编辑"
-            />
+            android:layout_height="wrap_content" />
 
+
+        <LinearLayout
+            android:id="@+id/lay_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/btn_edit"
+                style="@style/BtnStyle"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:text="编辑" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

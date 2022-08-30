@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 public class Constants {
     private static String ROOT_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
     public static String LOG_DIR = ROOT_PATH + File.separator + "log";
-    public static String EXCEL_DIR = ROOT_PATH + File.separator + "excel";
+    public static String FILE_DIR = ROOT_PATH + File.separator + "excel";
 
     @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.PARAMETER)

@@ -4,52 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20px"
+
     tools:context=".addinfo.AddTechnicianActivity">
 
-    <TextView
-        android:id="@+id/tv_city_choise"
-        style="@style/Tv_Title_Style"
-        android:layout_alignParentRight="true"
-        android:text="城市" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_city"
+    <com.baoge.wnotes.view.ToolBar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_city_choise"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/tv_city_choise"
-        android:background="@drawable/spinner_drop_down_shape"
-        android:spinnerMode="dialog" />
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:padding="20px">
 
 
-    <Button
-        android:id="@+id/btn_add"
-        style="@style/BtnStyle"
-        android:layout_below="@id/tv_city_choise"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_btn"
-        android:text="@string/add" />
+        <TextView
+            android:id="@+id/tv_city_choise"
+            style="@style/Tv_Title_Style"
+            android:layout_alignParentRight="true"
+            android:text="城市" />
 
-    <EditText
-        android:id="@+id/edt"
-        style="@style/EditStyle"
-        android:layout_alignTop="@id/btn_add"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/btn_add"
-        android:background="@drawable/bg_shape_unchecked"
-        android:hint="请输入技师名字" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_city_choise"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/tv_city_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/BtnStyle"
+            android:layout_below="@id/tv_city_choise"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_btn"
+            android:text="@string/add" />
 
-        android:id="@+id/rcv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edt"
-        android:layout_marginTop="30dp" />
+        <EditText
+            android:id="@+id/edt"
+            style="@style/EditStyle"
+            android:layout_alignTop="@id/btn_add"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/btn_add"
+            android:background="@drawable/bg_shape_unchecked"
+            android:hint="请输入技师名字" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/rcv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edt"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
