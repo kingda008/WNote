@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textColor="#ffffff"
-        android:text="畅行天下"
+        android:text="一剑惊鸿"
         />
 </RelativeLayout>

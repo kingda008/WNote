@@ -126,16 +126,16 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
                     partDeviceMoney = partDeviceMoney + order.getPartPrice();
                     otherMoney = otherMoney + order.getOtherPrice();
                     supportMoney = supportMoney + order.getSupportPrice();
-                    int deviceMoneyDB = order.getDevicePrice();
-                    deviceMoney = deviceMoney + deviceMoneyDB;
+                    deviceMoney = deviceMoney + order.getDevicePrice();
                     installMoney = installMoney + order.getInstallPrice();
                     invoceMoney = invoceMoney + order.getInvoice();
 
-                    double technicianMoney = (order.getTransactionAmount() - order.getTaxiFare() - order.getPartPrice() - order.getInstallPrice() - order.getOtherPrice() - order.getSupportPrice() - deviceMoneyDB - order.getInvoice()) / 3.0;
-                    if (technicianMoneyMap.containsKey(order.getTechnician())) {
-                        technicianMoneyMap.put(order.getTechnician(), technicianMoneyMap.get(order.getTechnician()) + technicianMoney);
+                    double technicianMoney = (order.getTransactionAmount() - order.getTaxiFare() - order.getPartPrice() - order.getInstallPrice() - order.getOtherPrice() - order.getSupportPrice() - order.getDevicePrice() - order.getInvoice()) / 3.0;
+                    String techicianTag = order.getCity()+"#"+order.getTechnician();
+                    if (technicianMoneyMap.containsKey(techicianTag)) {
+                        technicianMoneyMap.put(techicianTag, technicianMoneyMap.get(techicianTag) + technicianMoney);
                     } else {
-                        technicianMoneyMap.put(order.getTechnician(), technicianMoney);
+                        technicianMoneyMap.put(techicianTag, technicianMoney);
                     }
 
                     //科室支持费用
@@ -265,7 +265,7 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
 
 
                 String excelFileName = (TextUtils.isEmpty(city) ? "所有城市" : city) + "_明细_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
-                String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "交易金额", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我"};
+                String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "售价", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我"};
                 String sheetName = "明细";
 
                 String filePaths = Constants.FILE_DIR + File.separator + excelFileName;
