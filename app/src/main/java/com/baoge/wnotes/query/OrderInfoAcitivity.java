@@ -86,12 +86,17 @@ public class OrderInfoAcitivity extends BaseActivity {
             rootGroup.addView(view);
 
             view = new StaisticTv(OrderInfoAcitivity.this);
+            view.setContent("姓名", order.getSupportName() + "");
+            rootGroup.addView(view);
+
+
+            view = new StaisticTv(OrderInfoAcitivity.this);
             view.setContent("支持", order.getSupportPrice() + "");
             rootGroup.addView(view);
 
-            view = new StaisticTv(OrderInfoAcitivity.this);
-            view.setContent("是否已经支持", order.getIsAleadySupport() ? "是" : "否");
-            rootGroup.addView(view);
+//            view = new StaisticTv(OrderInfoAcitivity.this);
+//            view.setContent("是否已经支持", order.getIsAleadySupport() ? "是" : "否");
+//            rootGroup.addView(view);
 
 
             view = new StaisticTv(OrderInfoAcitivity.this);
