@@ -34,7 +34,7 @@
 
     <TextView
         style="@style/TvStyle_28_949494"
-        android:text="版本号：V1.0.1"
+        android:text="@string/version"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"

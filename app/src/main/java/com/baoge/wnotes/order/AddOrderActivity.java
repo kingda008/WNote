@@ -77,11 +77,9 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        switchEditModelIfNecessary(intent);
-
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     /**
@@ -90,17 +88,23 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
      * @param intent
      */
     private void switchEditModelIfNecessary(Intent intent) {
+        LogUtil.d("switchEditModelIfNecessary ");
         String editOrderJson = intent.getStringExtra("order");
         if (!TextUtils.isEmpty(editOrderJson)) {
             editOrder = JSON.parseObject(editOrderJson, Order.class);
 
 
             ((Button) findViewById(R.id.btn_add)).setText("保存");
+            citys = DbManager.getInstance().queryCitysName();
+            installers = DbManager.getInstance().queryInstallerNames(editOrder.getCity());
+            technicians = DbManager.getInstance().queryTechnicianNames(editOrder.getCity());
 
-            citySpinner.setSelection(CommUtil.getPosition(citys, editOrder.getCity()));
-            technicianSpinner.setSelection(CommUtil.getPosition(technicians, editOrder.getTechnician()));
-            installerSpinner.setSelection(CommUtil.getPosition(installers, editOrder.getInstaller()));
-            deviceSpinner.setSelection(CommUtil.getPosition(devices, editOrder.getDevice()));
+            citySpinner.setSelection(CommUtil.getPosition(citys, editOrder.getCity()),true);
+            initTechnicianSpinner(editOrder.getCity());
+            initStallerpinner(editOrder.getCity());
+
+
+
 
             orderTime.setText(DateFormat.getDate(editOrder.getOrderTime(), DateFormat.FORMAT_YYYY_MM_DD));
             priceEdt.setText(editOrder.getTransactionAmount() + "");
@@ -117,6 +121,31 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             if (editOrder.getOtherPrice() > 0) {
                 otherPriceEdt.setText(editOrder.getOtherPrice() + "");
             }
+
+
+
+
+            technicianSpinner.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    technicianSpinner.setSelection(CommUtil.getPosition(technicians, editOrder.getTechnician()),true);
+
+                }
+            },500);
+            installerSpinner.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    installerSpinner.setSelection(CommUtil.getPosition(installers, editOrder.getInstaller()),true);
+                }
+            },500);
+            deviceSpinner.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    deviceSpinner.setSelection(CommUtil.getPosition(devices, editOrder.getDevice()),true);
+
+                }
+            },500);
+
         }
     }
 
@@ -172,6 +201,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initCitySpinner() {
+
         citySpinnerSelectPosition = 0;
         citySpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, citys);
         citySpinner.setAdapter(citySpinnerAdapter);
@@ -196,8 +226,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initTechnicianSpinner(String city) {
+        LogUtil.d("initTechnicianSpinner "+city);
         technicianSpinnerSelectPosition = -1;
         technicians = DbManager.getInstance().queryTechnicianNames(city);
+        CommUtil.printLog(technicians);
         technicianSpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, technicians);
         technicianSpinner.setAdapter(technicianSpinnerAdapter);
 
@@ -207,7 +239,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             technicianSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    LogUtil.d("technicians:" + technicians.get(position));
+                    LogUtil.d("onItemSelected technicians:" + technicians.get(position));
                     technicianSpinnerSelectPosition = position;
 
                 }
@@ -224,9 +256,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initStallerpinner(String city) {
+        LogUtil.d("initStallerpinner "+city);
         installerSpinnerSelectPosition = -1;
         installers = DbManager.getInstance().queryInstallerNames(city);
-
+        CommUtil.printLog(installers);
         installerSpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, installers);
         installerSpinner.setAdapter(installerSpinnerAdapter);
 
@@ -236,7 +269,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             installerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    LogUtil.d("installers:" + installers.get(position));
+                    LogUtil.d("onItemSelected installers:" + installers.get(position));
                     installerSpinnerSelectPosition = position;
 
                 }

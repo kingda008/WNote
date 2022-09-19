@@ -6,6 +6,7 @@
         <entry key="..\:/GitHub/WNote/app/src/main/res/drawable/selector_btn.xml" value="0.3380208333333333" />
         <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_add_info.xml" value="0.3177083333333333" />
         <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_add_order.xml" value="0.3177083333333333" />
+        <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_main.xml" value="0.3177083333333333" />
         <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_order_edit.xml" value="0.3177083333333333" />
         <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_order_info_acitivity.xml" value="0.3177083333333333" />
         <entry key="..\:/GitHub/WNote/app/src/main/res/layout/activity_order_query.xml" value="0.3177083333333333" />
@@ -13,7 +14,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

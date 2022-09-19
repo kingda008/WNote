@@ -14,4 +14,5 @@
 
     <string name="add">增加</string>
     <string name="share">分享</string>
+    <string name="version">版本号：V1.0.2</string>
 </resources>
