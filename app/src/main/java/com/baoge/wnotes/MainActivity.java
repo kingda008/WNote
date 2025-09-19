@@ -27,6 +27,7 @@ import com.baoge.wnotes.addinfo.AddInfoActivity;
 import com.baoge.wnotes.base.BaseActivity;
 import com.baoge.wnotes.order.AddOrderActivity;
 import com.baoge.wnotes.query.OrderQueryActivity;
+import com.baoge.wnotes.util.DataUtil;
 import com.baoge.wnotes.util.LogUtil;
 import com.baoge.wnotes.util.ToastUtil;
 
@@ -41,8 +42,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
         init();
+        if (Math.abs(System.currentTimeMillis() - DataUtil.getLastLoginTime()) > 1000 * 60 * 10) {
+            showPassWordDialog();
+        }
 
-        showPassWordDialog();
     }
 
 
@@ -69,6 +72,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         if ("wdc0601".equals(dialog.getInputEditText().getText().toString())) {
                             ToastUtil.show("小王真好看");
                             tipsDialog.dismiss();
+
+                            DataUtil.updateLoginTime();
                         } else {
                             ToastUtil.show("密码错误");
 
@@ -96,7 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ((TextView) findViewById(R.id.add_record)).setOnClickListener(this);
         ((TextView) findViewById(R.id.query_record)).setOnClickListener(this);
 
-
+        ((TextView) findViewById(R.id.version)).setText(BuildConfig.BUILD_TIME);
     }
 
     @Override

@@ -33,6 +33,7 @@
 
 
     <TextView
+        android:id="@+id/version"
         style="@style/TvStyle_28_949494"
         android:text="@string/version"
         android:layout_centerHorizontal="true"

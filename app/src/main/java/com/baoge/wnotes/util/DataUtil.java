@@ -21,4 +21,13 @@ public class DataUtil {
             editor.putInt(city, price);
         }
     }
+
+
+    public static void updateLoginTime(){
+        editor.putLong("loginTime", System.currentTimeMillis());
+    }
+
+    public static long getLastLoginTime(){
+        return sharedPreferences.getLong("loginTime",0);
+    }
 }

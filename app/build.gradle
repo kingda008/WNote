@@ -2,15 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    compileSdk 34
+    namespace "com.baoge.wnotes"
     defaultConfig {
         applicationId "com.baoge.wnotes"
-        minSdkVersion 23
-        targetSdkVersion 31
+        minSdkVersion 31
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BUILD_TIME", "\"${new Date().format('yyyy-MM-dd HH:mm:ss')}\""
     }
     buildTypes {
         release {
@@ -19,26 +20,71 @@ android {
         }
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_11
-//        targetCompatibility JavaVersion.VERSION_11
-//    }
-//    viewBinding {
-//        enabled = true
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
+    buildFeatures {
+        buildConfig true
+    }
+    buildFeatures {
+        viewBinding true
+    }
     greendao {
         schemaVersion 20
         daoPackage "com.baoge.wnotes.dao"
         targetGenDir "src/main/java"
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            //project.name
-            outputFileName =  "WNote.apk"
+//    applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            //project.name
+//            outputFileName =  "WNote.apk"
+//        }
+//    }
+
+
+    signingConfigs {
+
+        release {
+            storeFile file('../key/key.jks') // 指定密钥库文件路径
+            storePassword '111111111' // 密钥库密码
+            keyAlias 'zdjkey' // 密钥别称
+            keyPassword '111111111' // 密钥密码
+        }
+
+
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BUILD_TIME", "\"${new Date().format('yyyy-MM-dd HH:mm:ss')}\""
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    outputFileName = "WNote.apk"
+                }
+            }
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BUILD_TIME", "\"${new Date().format('yyyy-MM-dd HH:mm:ss')}\""
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    outputFileName = "WNote.apk"
+                }
+            }
+
+
         }
     }
+
+
 
 }
 
