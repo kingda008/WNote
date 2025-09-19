@@ -42,7 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
         init();
-        if (Math.abs(System.currentTimeMillis() - DataUtil.getLastLoginTime()) > 1000 * 60 * 10) {
+
+        if (Math.abs(System.currentTimeMillis() - DataUtil.getLastLoginTime()) > 1000 * 60 * 30) {
             showPassWordDialog();
         }
 

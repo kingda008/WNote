@@ -24,7 +24,9 @@ public class DataUtil {
 
 
     public static void updateLoginTime(){
+
         editor.putLong("loginTime", System.currentTimeMillis());
+        editor.commit();
     }
 
     public static long getLastLoginTime(){
