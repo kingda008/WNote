@@ -389,7 +389,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             return;
         }
         if (TextUtils.isEmpty(patientNanme.getText().toString())) {
-            ToastUtil.show("请先输入患者姓名");
+            ToastUtil.show("请先输入客户姓名");
             return;
         }
         if (TextUtils.equals(timeSelectTip, orderTime.getText().toString())) {
