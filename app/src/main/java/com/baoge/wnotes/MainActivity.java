@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         init();
 
-        if (Math.abs(System.currentTimeMillis() - DataUtil.getLastLoginTime()) > 1000 * 60 * 15) {
+        if (Math.abs(System.currentTimeMillis() - DataUtil.getLastLoginTime()) > 1000 * 60 * 10) {
             showPassWordDialog();
         }
 
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
                         if ("wdc0601".equals(dialog.getInputEditText().getText().toString())) {
-                            ToastUtil.show("王总要暴富");
+                            ToastUtil.show("小王真漂亮");
                             tipsDialog.dismiss();
 
                             DataUtil.updateLoginTime();

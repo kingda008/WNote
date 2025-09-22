@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textColor="#ffffff"
-        android:text="一剑惊鸿"
+        android:text="王总暴富"
         />
 </RelativeLayout>
