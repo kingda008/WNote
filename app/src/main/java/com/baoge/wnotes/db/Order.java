@@ -4,7 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-@Entity(nameInDb = "order")
+@Entity(nameInDb = "'order'")
 public class Order {
     @Id(autoincrement = true)
     private Long id;
@@ -41,13 +41,19 @@ public class Order {
     private boolean isAleadySupport;
     //新增，编辑，退货
     private int type;
-    @Generated(hash = 1889993842)
+
+    private String patientName;
+    private String patientId;
+    private String patientPhone;
+
+    @Generated(hash = 303281671)
     public Order(Long id, long orderAddTime, long orderTime, String city,
             String hospital, String departMent, String technician, String installer,
             String device, int devicePrice, int transactionAmount, int taxiFare,
             int partPrice, int installPrice, int supportPrice, String supportName,
             String otherContent, int otherPrice, int invoice,
-            boolean isAleadySupport, int type) {
+            boolean isAleadySupport, int type, String patientName, String patientId,
+            String patientPhone) {
         this.id = id;
         this.orderAddTime = orderAddTime;
         this.orderTime = orderTime;
@@ -69,10 +75,14 @@ public class Order {
         this.invoice = invoice;
         this.isAleadySupport = isAleadySupport;
         this.type = type;
+        this.patientName = patientName;
+        this.patientId = patientId;
+        this.patientPhone = patientPhone;
     }
     @Generated(hash = 1105174599)
     public Order() {
     }
+    
     public Long getId() {
         return this.id;
     }
@@ -200,5 +210,35 @@ public class Order {
         this.type = type;
     }
 
+    public boolean isAleadySupport() {
+        return isAleadySupport;
+    }
 
+    public void setAleadySupport(boolean aleadySupport) {
+        isAleadySupport = aleadySupport;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+
+    public String getPatientPhone() {
+        return patientPhone;
+    }
+
+    public void setPatientPhone(String patientPhone) {
+        this.patientPhone = patientPhone;
+    }
 }

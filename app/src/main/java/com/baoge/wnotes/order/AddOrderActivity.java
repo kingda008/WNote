@@ -55,7 +55,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
 
     private TextView orderTime;
 
-    private EditText priceEdt, taxiPriceEdt, partPriceEdt, otherPriceEdt,invoiceEdt,nameEdt;
+    private EditText priceEdt, taxiPriceEdt, partPriceEdt, otherPriceEdt,invoiceEdt,nameEdt,patientNanme;
     private EditText supportEdt, otherTipEdt;
 
     private final String timeSelectTip = "请选择交易日期";
@@ -166,7 +166,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         otherPriceEdt = (EditText) findViewById(R.id.edt_other_price);
         invoiceEdt = (EditText)findViewById(R.id.edt_invoice);
         nameEdt = (EditText)findViewById(R.id.edt_name);
-
+        patientNanme = (EditText)findViewById(R.id.edt_patient_name);
         supportCB = (CheckBox)findViewById(R.id.cb_is_support);
         ((Button) findViewById(R.id.btn_add)).setOnClickListener(this);
         orderTime.setOnClickListener(this);
@@ -388,7 +388,10 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
             ToastUtil.show("请先输入金额");
             return;
         }
-
+        if (TextUtils.isEmpty(patientNanme.getText().toString())) {
+            ToastUtil.show("请先输入患者姓名");
+            return;
+        }
         if (TextUtils.equals(timeSelectTip, orderTime.getText().toString())) {
             ToastUtil.show(timeSelectTip);
             return;
@@ -413,7 +416,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         order.setTransactionAmount(Integer.parseInt(priceEdt.getText().toString()));
         order.setSupportName(nameEdt.getText().toString());
         order.setIsAleadySupport(supportCB.isChecked());
-
+        order.setPatientName(patientNanme.getText().toString());
 
         if(!TextUtils.isEmpty(invoiceEdt.getText().toString())){
             order.setInvoice(Integer.parseInt(invoiceEdt.getText().toString()));

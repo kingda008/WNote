@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class StatisticActivity extends BaseActivity implements View.OnClickListener {
-    private String city;
+    private String city,technician;
     private long startTime;
     private long endTime;
     private LinearLayout rootLayout;
@@ -45,7 +45,8 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
         city = getIntent().getStringExtra("city");
         startTime = getIntent().getLongExtra("startTime", -1);
         endTime = getIntent().getLongExtra("endTime", -1);
-        statistic(city, startTime, endTime);
+        technician = getIntent().getStringExtra("technician");
+        statistic(city, technician,startTime, endTime);
 
     }
 
@@ -62,22 +63,22 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
         city = getIntent().getStringExtra("city");
         startTime = getIntent().getLongExtra("startTime", -1);
         endTime = getIntent().getLongExtra("endTime", -1);
-
-        statistic(city, startTime, endTime);
+        technician = getIntent().getStringExtra("technician");
+        statistic(city, technician,startTime, endTime);
     }
 
-    private void statistic(String city, long startTime, long endTime) {
+    private void statistic(String city, String technician,long startTime, long endTime) {
         LogUtil.i("statistic city:" + city);
         LogUtil.i("statistic startTime:" + startTime);
         LogUtil.i("statistic endTime:" + endTime);
-
+        LogUtil.i("statistic technician:" + technician);
         boolean isInvalid = false;
         if (startTime > 0 && endTime > 0) {
             stringBuilder = new StringBuilder();
             if (TextUtils.isEmpty(city)) {
-                orderList = DbManager.getInstance().queryOrders(startTime, endTime);
+                orderList = DbManager.getInstance().queryOrders(startTime, endTime,technician);
             } else {
-                orderList = DbManager.getInstance().queryOrders(city, startTime, endTime);
+                orderList = DbManager.getInstance().queryOrders(city,startTime, endTime, technician);
             }
 
             StaisticTv staisticTv = new StaisticTv(StatisticActivity.this);
@@ -265,7 +266,7 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
 
 
                 String excelFileName = (TextUtils.isEmpty(city) ? "所有城市" : city) + "_明细_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
-                String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "售价", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我"};
+                String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "售价", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我","客户姓名"};
                 String sheetName = "明细";
 
                 String filePaths = Constants.FILE_DIR + File.separator + excelFileName;

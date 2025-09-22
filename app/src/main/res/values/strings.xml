@@ -3,7 +3,8 @@
     <string name="add_info">录入信息</string>
     <string name="add_record">添加记录</string>
     <string name="query_record">查询记录</string>
-
+    <string name="query_record_technician">技师查询</string>
+    <string name="exit">退出</string>
 
     <string name="add_city">添加城市</string>
     <string name="add_hospital">添加医院</string>
@@ -12,6 +13,8 @@
     <string name="add_installer">添加装机师</string>
     <string name="add_devices">添加设备</string>
 
+    <string name="technician">技师</string>
+    <string name="city">城市</string>
     <string name="add">增加</string>
     <string name="share">分享</string>
     <string name="version">版本号：V1.0.2</string>

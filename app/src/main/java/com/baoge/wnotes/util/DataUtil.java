@@ -22,7 +22,11 @@ public class DataUtil {
         }
     }
 
+    public static void resetTime(){
 
+        editor.putLong("loginTime", 0);
+        editor.commit();
+    }
     public static void updateLoginTime(){
 
         editor.putLong("loginTime", System.currentTimeMillis());

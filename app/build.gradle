@@ -32,7 +32,7 @@ android {
         viewBinding true
     }
     greendao {
-        schemaVersion 20
+        schemaVersion 21
         daoPackage "com.baoge.wnotes.dao"
         targetGenDir "src/main/java"
     }
@@ -101,6 +101,8 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.3.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.alibaba:fastjson:1.2.28'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.2'
+
     // implementation 'com.afollestad.material-dialogs:input:0.9.6.0'
 //    implementation 'com.afollestad.materal-dialogs:datetime:0.9.6.0'
 //    implementation 'com.afollestad.material-dialogs:bottomsheets:0.9.6.0'

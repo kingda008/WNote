@@ -21,7 +21,7 @@
         <TextView
             android:id="@+id/tv_city_choise"
             style="@style/Tv_Title_Style"
-            android:text="城市" />
+            android:text="@string/city" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_city"
@@ -33,11 +33,34 @@
             android:background="@drawable/spinner_drop_down_shape"
             android:spinnerMode="dialog" />
 
+
+        <TextView
+
+            android:id="@+id/tv_technician_choise"
+            style="@style/Tv_Title_Style"
+            android:text="@string/technician"
+            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_below="@id/tv_city_choise"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_technician"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_technician_choise"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_city_choise"
+            android:background="@drawable/spinner_drop_down_shape"
+            android:spinnerMode="dialog"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/tv_order_mounth"
             style="@style/Tv_Title_Style"
-            android:layout_below="@id/tv_city_choise"
-            android:layout_alignLeft="@id/tv_city_choise"
+            android:layout_below="@id/tv_technician_choise"
+            android:layout_alignLeft="@id/tv_technician_choise"
             android:layout_marginTop="20dp"
             android:text="月份" />
 
@@ -51,24 +74,6 @@
             android:layout_toRightOf="@id/tv_order_mounth"
             android:text="请选择月份" />
 
-        <!--    <TextView-->
-        <!--        android:id="@+id/tv_statistics"-->
-        <!--        style="@style/Tv_Title_Style"-->
-        <!--        android:layout_below="@id/tv_order_mounth"-->
-        <!--        android:layout_alignLeft="@id/tv_order_mounth"-->
-        <!--        android:layout_marginTop="10dp"-->
-        <!--        android:text="统计" />-->
-
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/tv_statistics_content"-->
-        <!--        style="@style/Tv_Title_Style"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_alignTop="@id/tv_statistics"-->
-        <!--        android:layout_marginLeft="10dp"-->
-        <!--        android:layout_toRightOf="@id/tv_statistics"-->
-        <!--        android:text=" " />-->
 
 
         <LinearLayout

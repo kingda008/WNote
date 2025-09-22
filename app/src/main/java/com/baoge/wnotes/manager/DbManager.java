@@ -2,8 +2,6 @@ package com.baoge.wnotes.manager;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.style.TtsSpan;
-import android.view.TextureView;
 
 import com.baoge.wnotes.dao.DaoMaster;
 import com.baoge.wnotes.dao.DaoSession;
@@ -20,8 +18,6 @@ import com.baoge.wnotes.db.Hospital;
 import com.baoge.wnotes.db.Installer;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.db.Technician;
-import com.baoge.wnotes.util.DateFormat;
-import com.baoge.wnotes.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +29,11 @@ public class DbManager {
     private DaoSession daoSession;
 
     private DbManager() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME);
-        daoSession = new DaoMaster(helper.getWritableDb()).newSession();
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME);
+//        daoSession = new DaoMaster(helper.getWritableDb()).newSession();
+        DaoOpenHelper daoOpenHelper = new DaoOpenHelper(context, DB_NAME);
+
+        daoSession = new DaoMaster(daoOpenHelper.getWritableDb()).newSession();
     }
 
     public static void init(Context ctx) {
@@ -274,6 +273,18 @@ public class DbManager {
 
     }
 
+    public List<String> queryTechnicianNames() {
+        List<String> names = new ArrayList<>();
+        List<Technician> technicians = daoSession.getTechnicianDao().queryBuilder().list();
+        if (technicians != null && technicians.size() > 0) {
+            for (Technician technician : technicians) {
+                names.add(technician.getName());
+            }
+        }
+        return names;
+
+    }
+
     public void deleteTechnician(String city, String name) {
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(city)) {
             return;
@@ -436,9 +447,23 @@ public class DbManager {
         return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city)).where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
     }
 
-    public List<Order> queryOrders( long startTime, long endTime) {
-        return daoSession.getOrderDao().queryBuilder() .where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+    public List<Order> queryOrders(long startTime, long endTime) {
+        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
     }
+
+
+    public List<Order> queryOrders(String city, long startTime, long endTime, String technician) {
+        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city))
+                .where(OrderDao.Properties.Technician.eq(technician))
+                .where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+    }
+
+    public List<Order> queryOrders(long startTime, long endTime, String technician) {
+        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.OrderTime.between(startTime, endTime))
+                .where(OrderDao.Properties.Technician.eq(technician))
+                .orderAsc(OrderDao.Properties.OrderTime).list();
+    }
+
     public void deleteOrder(Order order) {
         if (order != null) {
             daoSession.getOrderDao().delete(order);

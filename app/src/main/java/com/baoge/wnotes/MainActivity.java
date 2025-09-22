@@ -102,6 +102,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ((TextView) findViewById(R.id.add_record)).setOnClickListener(this);
         ((TextView) findViewById(R.id.query_record)).setOnClickListener(this);
 
+        ((TextView) findViewById(R.id.exit)).setOnClickListener(this);
+
         ((TextView) findViewById(R.id.version)).setText(BuildConfig.BUILD_TIME);
     }
 
@@ -118,6 +120,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.query_record:
                 startActivity(MainActivity.this, OrderQueryActivity.class);
                 break;
+
+            case R.id.exit:
+//                DataUtil.resetTime();
+                System.exit(0);
+                break;
+
+
         }
     }
 

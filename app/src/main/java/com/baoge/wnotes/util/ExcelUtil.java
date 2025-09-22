@@ -189,7 +189,7 @@ public class ExcelUtil {
                     double toMe = profit * 2 / 3.0 + taxiMoney + supportMoney;
 
                     list.add(CommUtil.parsePrice(toMe));
-
+                    list.add(order.getPatientName());
                     for (int i = 0; i < list.size(); i++) {
                         sheet.addCell(new Label(i, j + 1, list.get(i), arial12format));
                         if (list.get(i).length() <= 4) {

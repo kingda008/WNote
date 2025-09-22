@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20px"
     android:background="@drawable/shape_activity_background"
     android:orientation="vertical"
+    android:paddingTop="20px"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/lay_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,11 +20,13 @@
             style="@style/Main_Icon_Style"
             android:drawableTop="@mipmap/main_icon_add_info"
             android:text="@string/add_info" />
+
         <TextView
             android:id="@+id/add_record"
             style="@style/Main_Icon_Style"
             android:drawableTop="@mipmap/main_icon_add_record"
             android:text="@string/add_record" />
+
         <TextView
             android:id="@+id/query_record"
             style="@style/Main_Icon_Style"
@@ -31,13 +34,25 @@
             android:text="@string/query_record" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lay_1"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/exit"
+            style="@style/Main_Icon_Style"
+            android:drawableTop="@mipmap/exit"
+            android:text="@string/exit" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/version"
         style="@style/TvStyle_28_949494"
-        android:text="@string/version"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        />
+        android:text="@string/version" />
 </RelativeLayout>

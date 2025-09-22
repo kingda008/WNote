@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +27,7 @@ import com.baoge.wnotes.base.BaseActivity;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.manager.DbManager;
 import com.baoge.wnotes.order.AddOrderActivity;
+import com.baoge.wnotes.util.CommUtil;
 import com.baoge.wnotes.util.DateFormat;
 import com.baoge.wnotes.util.LogUtil;
 import com.baoge.wnotes.util.ToastUtil;
@@ -38,10 +40,13 @@ import java.util.Locale;
 
 
 public class OrderQueryActivity extends BaseActivity implements View.OnClickListener {
-    private AppCompatSpinner spinner;
+    private AppCompatSpinner spinner, technicianSpinner;
     private List<String> citys = null;
+    private List<String> technicians = null;
     private ArrayAdapter<String> citySpinnerAdapter;
+    private ArrayAdapter<String> technicianSpinnerAdapter;
     private int citySpinnerSelectPosition = 0;
+    private int technicianSpinnerSelectPosition = -1;
     private RecyclerView recyclerView;
     private TextView mounth;
     private OrderListAdapter orderListAdapter;
@@ -90,6 +95,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
             }
             mounth.setClickable(true);
             initCityAdapter();
+            initTechnicianSpinner("");
         } else {
             mounth.setClickable(false);
         }
@@ -98,6 +104,8 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
     private void init() {
 
         spinner = (AppCompatSpinner) findViewById(R.id.sp_city);
+        technicianSpinner = (AppCompatSpinner) findViewById(R.id.sp_technician);
+
         recyclerView = (RecyclerView) findViewById(R.id.rcv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -150,6 +158,17 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LogUtil.d("city:" + citys.get(position));
                 citySpinnerSelectPosition = position;
+                if (position > 0) {
+                    findViewById(R.id.tv_technician_choise).setVisibility(View.VISIBLE);
+                    findViewById(R.id.sp_technician).setVisibility(View.VISIBLE);
+                } else {
+                    if (position > 0) {
+                        findViewById(R.id.tv_technician_choise).setVisibility(View.GONE);
+                        findViewById(R.id.sp_technician).setVisibility(View.GONE);
+                    }
+                }
+
+                initTechnicianSpinner(citys.get(position));
                 updateOrderList();
             }
 
@@ -159,6 +178,42 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
+
+    private void initTechnicianSpinner(String city) {
+        LogUtil.d("initTechnicianSpinner " + city);
+        technicianSpinnerSelectPosition = -1;
+        if (TextUtils.isEmpty(city)) {
+            technicians = DbManager.getInstance().queryTechnicianNames();
+        } else {
+            technicians = DbManager.getInstance().queryTechnicianNames(city);
+        }
+        technicians.add(0, "所有技师");
+        CommUtil.printLog(technicians);
+        technicianSpinnerAdapter = new ArrayAdapter<>(this, R.layout.item_textview, technicians);
+        technicianSpinner.setAdapter(technicianSpinnerAdapter);
+
+        if (technicians != null && technicians.size() > 0) {
+            technicianSpinnerSelectPosition = 0;
+            technicianSpinner.setSelection(0);
+            technicianSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    LogUtil.d("onItemSelected technicians:" + technicians.get(position));
+                    technicianSpinnerSelectPosition = position;
+                    updateOrderList();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    LogUtil.d("onNothingSelected");
+                }
+            });
+        } else {
+            technicianSpinnerAdapter.clear();
+            technicianSpinnerAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -173,6 +228,7 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
                 intent.putExtra("city", citySpinnerSelectPosition == 0 ? "" : citys.get(citySpinnerSelectPosition));
                 intent.putExtra("startTime", startTime);
                 intent.putExtra("endTime", endTime);
+                intent.putExtra("technician", technicians.get(technicianSpinnerSelectPosition));
                 startActivity(intent);
                 break;
             case R.id.btn_delete_all:
@@ -271,11 +327,19 @@ public class OrderQueryActivity extends BaseActivity implements View.OnClickList
 
             LogUtil.i("start time:" + startTime + "  , " + DateFormat.getDate(startTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS));
             LogUtil.i("end time:" + endTime + "  , " + DateFormat.getDate(endTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS));
-            if (citySpinnerSelectPosition == 0) {
-                orders = DbManager.getInstance().queryOrders(startTime, endTime);
+            LogUtil.i("technicianSpinnerSelectPosition " + technicianSpinnerSelectPosition);
+            if (technicianSpinnerSelectPosition == 0) {
+                if (citySpinnerSelectPosition == 0) {
+                    orders = DbManager.getInstance().queryOrders(startTime, endTime);
+                } else {
+                    orders = DbManager.getInstance().queryOrders(citys.get(citySpinnerSelectPosition), startTime, endTime);
+                }
             } else {
-                orders = DbManager.getInstance().queryOrders(citys.get(citySpinnerSelectPosition), startTime, endTime);
+
+                orders = DbManager.getInstance().queryOrders(citys.get(citySpinnerSelectPosition), startTime, endTime, technicians.get(technicianSpinnerSelectPosition));
+
             }
+
             orderListAdapter.setOrders(orders);
             orderListAdapter.notifyDataSetChanged();
 
