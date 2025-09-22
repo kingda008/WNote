@@ -2,6 +2,7 @@ package com.baoge.wnotes.manager;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.baoge.wnotes.dao.DaoMaster;
 import com.baoge.wnotes.dao.DaoSession;
@@ -18,6 +19,9 @@ import com.baoge.wnotes.db.Hospital;
 import com.baoge.wnotes.db.Installer;
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.db.Technician;
+import com.baoge.wnotes.util.LogUtil;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -438,31 +442,38 @@ public class DbManager {
         return daoSession.getOrderDao().queryBuilder().list();
     }
 
-    public List<Order> queryOrders(String city) {
 
-        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city)).list();
+    public List<Order> queryOrders(long startTime, long endTime) {
+        return queryOrders("", startTime, endTime, "");
     }
 
     public List<Order> queryOrders(String city, long startTime, long endTime) {
-        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city)).where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+        return queryOrders(city, startTime, endTime, "");
     }
 
-    public List<Order> queryOrders(long startTime, long endTime) {
-        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+    public List<Order> queryOrders(long startTime, long endTime, String technician) {
+
+        return queryOrders("", startTime, endTime, technician);
     }
 
 
     public List<Order> queryOrders(String city, long startTime, long endTime, String technician) {
-        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.City.eq(city))
-                .where(OrderDao.Properties.Technician.eq(technician))
-                .where(OrderDao.Properties.OrderTime.between(startTime, endTime)).orderAsc(OrderDao.Properties.OrderTime).list();
+        LogUtil.i("queryOrders city:" + city);
+        LogUtil.i("startTime" + startTime);
+        LogUtil.i("endTime:" + endTime);
+        LogUtil.i("technician:" + technician);
+
+        QueryBuilder<Order> orders = daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.OrderTime.between(startTime, endTime));
+
+        if (!TextUtils.isEmpty(city)) {
+            orders = orders.where(OrderDao.Properties.City.eq(city));
+        }
+        if (!TextUtils.isEmpty(technician)) {
+            orders = orders.where(OrderDao.Properties.Technician.eq(technician));
+        }
+        return orders.orderAsc(OrderDao.Properties.OrderTime).list();
     }
 
-    public List<Order> queryOrders(long startTime, long endTime, String technician) {
-        return daoSession.getOrderDao().queryBuilder().where(OrderDao.Properties.OrderTime.between(startTime, endTime))
-                .where(OrderDao.Properties.Technician.eq(technician))
-                .orderAsc(OrderDao.Properties.OrderTime).list();
-    }
 
     public void deleteOrder(Order order) {
         if (order != null) {

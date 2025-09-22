@@ -9,7 +9,7 @@ public class DividingLine extends androidx.appcompat.widget.AppCompatTextView {
     public DividingLine(Context context) {
         super(context);
         this.setTextAppearance(R.style.Tv_DividingLine_Style);
-        setContent("-----------------------------------------");
+        setContent("------------------------");
     }
 
 

@@ -194,6 +194,6 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textSize">22sp</item>
-        <item name="android:textColor">#dbdbdb</item>
+        <item name="android:textColor">#d81e06</item>
     </style>
 </resources>

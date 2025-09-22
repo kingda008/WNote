@@ -4,7 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-@Entity(nameInDb = "'order'")
+@Entity(nameInDb = "order")
 public class Order {
     @Id(autoincrement = true)
     private Long id;

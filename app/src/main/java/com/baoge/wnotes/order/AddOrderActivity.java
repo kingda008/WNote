@@ -466,6 +466,7 @@ public class AddOrderActivity extends BaseActivity implements View.OnClickListen
         editTexts.add(otherTipEdt);
         editTexts.add(nameEdt);
         editTexts.add(invoiceEdt);
+        editTexts.add(patientNanme);
         clearEditText(editTexts);
         supportCB.setChecked(false);
 

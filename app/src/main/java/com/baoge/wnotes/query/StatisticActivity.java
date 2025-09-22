@@ -75,11 +75,9 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
         boolean isInvalid = false;
         if (startTime > 0 && endTime > 0) {
             stringBuilder = new StringBuilder();
-            if (TextUtils.isEmpty(city)) {
-                orderList = DbManager.getInstance().queryOrders(startTime, endTime,technician);
-            } else {
-                orderList = DbManager.getInstance().queryOrders(city,startTime, endTime, technician);
-            }
+
+            orderList = DbManager.getInstance().queryOrders(city,startTime, endTime, technician);
+
 
             StaisticTv staisticTv = new StaisticTv(StatisticActivity.this);
             String cityContent = TextUtils.isEmpty(city) ? "所有城市" : city;
@@ -89,9 +87,9 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
 
             staisticTv = new StaisticTv(StatisticActivity.this);
             String startTimeContent = DateFormat.getDate(startTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS);
-            staisticTv.setContent("开始时间：", startTimeContent);
+            staisticTv.setContent("开始时间", startTimeContent);
             rootLayout.addView(staisticTv);
-            stringBuilder.append("开始时间").append(startTimeContent).append("\r\n");
+            stringBuilder.append("开始时间：").append(startTimeContent).append("\r\n");
 
             staisticTv = new StaisticTv(StatisticActivity.this);
             String endTimeContent = DateFormat.getDate(endTime, DateFormat.FORMAT_YYYY_MM_DD_HHMMSS);
@@ -260,12 +258,18 @@ public class StatisticActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_share: {
 
 
-                String excelFileName = (TextUtils.isEmpty(city) ? "所有城市" : city) + "_明细_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
+                String excelFileName = (TextUtils.isEmpty(city) ? "所有城市" : city) +"_"+(TextUtils.isEmpty(technician) ? "所有技师" : technician) + "_明细_" + DateFormat.getDate(System.currentTimeMillis(), DateFormat.FORMAT_YYYY_MM_DD) + ".xls";
                 String[] title = {"时间", "城市", "装机师", "技师", "技师费用", "设备", "售价", "打车", "支持者", "支持", "配件费用", "发票", "其他费用", "给我","客户姓名"};
                 String sheetName = "明细";
 

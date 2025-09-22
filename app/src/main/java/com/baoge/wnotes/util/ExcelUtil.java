@@ -1,6 +1,7 @@
 package com.baoge.wnotes.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.baoge.wnotes.db.Order;
 import com.baoge.wnotes.manager.DbManager;
@@ -189,8 +190,13 @@ public class ExcelUtil {
                     double toMe = profit * 2 / 3.0 + taxiMoney + supportMoney;
 
                     list.add(CommUtil.parsePrice(toMe));
-                    list.add(order.getPatientName());
+                    String patientName = order.getPatientName();
+                    if(TextUtils.isEmpty(patientName)){
+                        patientName = "未知";
+                    }
+                    list.add(patientName);
                     for (int i = 0; i < list.size(); i++) {
+                        LogUtil.i(i+"  "+list.get(i));
                         sheet.addCell(new Label(i, j + 1, list.get(i), arial12format));
                         if (list.get(i).length() <= 4) {
                             //设置列宽

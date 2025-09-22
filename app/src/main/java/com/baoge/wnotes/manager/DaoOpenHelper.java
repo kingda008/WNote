@@ -23,7 +23,25 @@ public class DaoOpenHelper extends DaoMaster.OpenHelper {
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
         LogUtil.i("onUpgrade Database oldVersion " + oldVersion + " newVersion " + newVersion);
-        MigrationHelper.migrate(db,  OrderDao.class);
+//        MigrationHelper.migrate(db,  OrderDao.class);
+
+        if(oldVersion < 21) {
+            try {
+                LogUtil.i("beginTransaction");
+                db.beginTransaction();
+
+
+
+                db.execSQL("ALTER TABLE \"order\" ADD COLUMN PATIENT_NAME TEXT");
+                db.execSQL("ALTER TABLE \"order\" ADD COLUMN PATIENT_ID TEXT");
+                db.execSQL("ALTER TABLE \"order\" ADD COLUMN PATIENT_PHONE TEXT");
+                db.setTransactionSuccessful();
+                LogUtil.i("setTransactionSuccessful");
+            } finally {
+                LogUtil.i("endTransaction");
+                db.endTransaction();
+            }
+        }
     }
 
 

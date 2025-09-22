@@ -50,9 +50,9 @@
 
     <TextView
         android:id="@+id/version"
-        style="@style/TvStyle_28_949494"
+        style="@style/TvStyle_42_000000"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:text="@string/version" />
+        android:layout_marginBottom="16dp"
+        android:text="" />
 </RelativeLayout>
